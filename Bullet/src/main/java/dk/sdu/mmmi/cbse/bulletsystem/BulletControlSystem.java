@@ -19,8 +19,13 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
 
     @Override
     public Entity createBullet(Entity shooter, GameData gameData) {
+        Entity bullet = null;
+        switch (gameData.getBulletType()) {
+            case "common":
 
-        return null;
+                break;
+        }
+        return bullet;
     }
 
     private void setShape(Entity entity) {

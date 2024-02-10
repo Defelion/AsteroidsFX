@@ -4,13 +4,15 @@ public class GameData {
 
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
+    private String bulletType = "common";
     private final GameKeys keys = new GameKeys();
-
 
     public GameKeys getKeys() {
         return keys;
     }
 
+    public String getBulletType() { return bulletType; }
+    public void setBulletType(String BulletType) { bulletType = BulletType; }
     public void setDisplayWidth(int width) {
         this.displayWidth = width;
     }

@@ -12,9 +12,17 @@ public class BulletPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
+        bullet = createBullet(gameData);
     }
 
+    public Entity getBullet () { return bullet; }
+    private Entity createBullet(GameData gameData) {
+        Entity Bullet = new Bullet();
+        Bullet.setPolygonCoordinates(1,1,1,1,1,1);
+        Bullet.setX(gameData.getDisplayHeight()/2);
+        Bullet.setY(gameData.getDisplayWidth()/2);
+        return Bullet;
+    }
     @Override
     public void stop(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
