@@ -11,6 +11,8 @@ public class Entity implements Serializable {
     private double x;
     private double y;
     private double rotation;
+    private double speed;
+    private double rotationSpeed;
             
 
     public String getID() {
@@ -34,7 +36,6 @@ public class Entity implements Serializable {
     public double getX() {
         return x;
     }
-
     
     public void setY(double y) {
         this.y = y;
@@ -51,6 +52,12 @@ public class Entity implements Serializable {
     public double getRotation() {
         return rotation;
     }
-        
 
+    public void setRotationSpeed(double RotationSpeed) { this.rotationSpeed = RotationSpeed; }
+
+    public double getRotationSpeed() {return rotationSpeed;}
+
+    public void setSpeed(double Speed) { this.speed = Speed; }
+
+    public double getSpeed() { return speed; }
 }
