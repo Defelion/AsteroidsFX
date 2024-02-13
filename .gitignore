@@ -30,3 +30,7 @@ replay_pid*
 /Bullet/target/
 /CommonBullet/target/
 /.idea/
+/Astroid/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+/Astroid/target/generated-sources/plugin/HelpMojo.java
+/Astroid/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+/Astroid/target/maven-plugin-help.properties
