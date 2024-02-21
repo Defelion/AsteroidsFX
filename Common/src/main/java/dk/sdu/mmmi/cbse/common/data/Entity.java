@@ -10,9 +10,11 @@ public class Entity implements Serializable {
     private double[] polygonCoordinates;
     private double x;
     private double y;
-    private double rotation;
     private double speed;
+    private double rotation;
+    private double maxRotation = 360;
     private double rotationSpeed;
+    private int size;
             
 
     public String getID() {
@@ -53,6 +55,8 @@ public class Entity implements Serializable {
         return rotation;
     }
 
+    public double getMaxRotation() { return maxRotation; }
+
     public void setRotationSpeed(double RotationSpeed) { this.rotationSpeed = RotationSpeed; }
 
     public double getRotationSpeed() {return rotationSpeed;}
@@ -60,4 +64,8 @@ public class Entity implements Serializable {
     public void setSpeed(double Speed) { this.speed = Speed; }
 
     public double getSpeed() { return speed; }
+
+    public int getSize() { return size; }
+
+    public void setSize(int size) { this.size = size; }
 }

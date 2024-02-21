@@ -16,7 +16,8 @@
         <module>Player</module>
         <module>Bullet</module>
         <module>CommonBullet</module>
-        <module>astroids</module>
+        <module>asteroids</module>
+        <module>CommonAsteroids</module>
     </modules>
     <properties>
         <java>java</java>

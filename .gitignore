@@ -29,4 +29,5 @@ replay_pid*
 /Player/target/
 /Bullet/target/
 /CommonBullet/target/
+/*/target/
 /.idea/
