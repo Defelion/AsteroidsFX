@@ -5,7 +5,9 @@ public class GameData {
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private final GameKeys keys = new GameKeys();
-
+    private int destroydAsteroids = 0;
+    private int destroyedEnemies = 0;
+    private double score = 0;
     public GameKeys getKeys() {
         return keys;
     }
@@ -26,5 +28,15 @@ public class GameData {
         return displayHeight;
     }
 
+    public int getDestroydAsteroids() { return destroydAsteroids; }
 
+    public void setDestroydAsteroids(int destroydAsteroids) { this.destroydAsteroids = destroydAsteroids; }
+
+    public int getDestroyedEnemies() { return destroyedEnemies; }
+
+    public void setDestroyedEnemies(int destroyedEnemies) { this.destroyedEnemies = destroyedEnemies; }
+
+    public double getScore() { return score; }
+
+    public void setScore(double score) { this.score = score; }
 }

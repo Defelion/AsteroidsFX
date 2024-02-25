@@ -4,6 +4,9 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 public class PlayerPlugin implements IGamePluginService {
 
     private Entity player;
@@ -30,9 +33,17 @@ public class PlayerPlugin implements IGamePluginService {
                 -6,6,
                 0,0,
                 -6,-6);
+        playerShip.setSize(6);
+        playerShip.setDamage(5);
         playerShip.setX(gameData.getDisplayHeight()/2);
         playerShip.setY(gameData.getDisplayWidth()/2);
         playerShip.setSpeed(1);
+        playerShip.setShotTimer(0);
+        playerShip.setMaxShotTimer(100);
+        playerShip.setHealth(100);
+        playerShip.setCurrenthealth(playerShip.getHealth());
+        Paint paint = Color.MIDNIGHTBLUE;
+        playerShip.setPaint(paint);
         playerShip.setRotationSpeed(5);
         return playerShip;
     }

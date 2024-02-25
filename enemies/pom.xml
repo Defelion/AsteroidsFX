@@ -9,7 +9,8 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>astroids</artifactId>
+    <groupId>dk.sdu.mmmi.cbse.common.enemies</groupId>
+    <artifactId>enemies</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -19,20 +20,15 @@
     <dependencies>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>Common</artifactId>
+            <artifactId>CommonBullet</artifactId>
             <version>1.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>dk.sdu.mmmi.cbse.common</groupId>
-            <artifactId>CommonAsteroids</artifactId>
+            <groupId>dk.sdu.mmmi.cbse</groupId>
+            <artifactId>Player</artifactId>
             <version>1.0.1-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>9.4.46.v20220331</version>
         </dependency>
     </dependencies>
 

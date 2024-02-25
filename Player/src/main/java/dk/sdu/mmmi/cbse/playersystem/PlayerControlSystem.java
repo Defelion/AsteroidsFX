@@ -20,38 +20,35 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
             
         for (Entity player : world.getEntities(Player.class)) {
-            if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                player.setRotation(player.getRotation() - player.getRotationSpeed());
+            double maxHealth = (player.getHealth() + gameData.getScore() / 1000);
+            double LostHealth = (maxHealth - player.getCurrenthealth());
+            player.setCurrenthealth(maxHealth - LostHealth);
+            if(player.getCurrenthealth() <= 0) {
+                world.removeEntity(player);
             }
-            if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
-                player.setRotation(player.getRotation() + player.getRotationSpeed());
-            }
-            if (gameData.getKeys().isDown(GameKeys.UP)) {
-                double changeX = Math.cos(Math.toRadians(player.getRotation()));
-                double changeY = Math.sin(Math.toRadians(player.getRotation()));
-                player.setX(player.getX() + changeX * player.getSpeed());
-                player.setY(player.getY() + changeY * player.getSpeed());
-            }
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> {world.addEntity(spi.createBullet(player,gameData));}
-                );
-            }
-            
-            if (player.getX() < 0) {
-                player.setX(gameData.getDisplayWidth());
-            }
+            else {
+                if (gameData.getKeys().isDown(GameKeys.LEFT)) {
+                    player.setRotation(player.getRotation() - player.getRotationSpeed());
+                }
+                if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
+                    player.setRotation(player.getRotation() + player.getRotationSpeed());
+                }
+                if (gameData.getKeys().isDown(GameKeys.UP)) {
+                    double changeX = Math.cos(Math.toRadians(player.getRotation()));
+                    double changeY = Math.sin(Math.toRadians(player.getRotation()));
+                    player.setX(player.getX() + changeX * player.getSpeed());
+                    player.setY(player.getY() + changeY * player.getSpeed());
+                }
+                if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+                    getBulletSPIs().stream().findFirst().ifPresent(
+                            spi -> {world.addEntity(spi.createBullet(player,gameData));}
+                    );
+                }
 
-            if (player.getX() > gameData.getDisplayWidth()) {
-                player.setX(0);
-            }
-
-            if (player.getY() < 0) {
-                player.setY(gameData.getDisplayHeight());
-            }
-
-            if (player.getY() > gameData.getDisplayHeight()) {
-                player.setY(0);
+                if (player.getX() < 0) { player.setX(gameData.getDisplayWidth()); }
+                if (player.getX() > gameData.getDisplayWidth()) { player.setX(0); }
+                if (player.getY() < 0) { player.setY(gameData.getDisplayHeight()); }
+                if (player.getY() > gameData.getDisplayHeight()) { player.setY(0); }
             }
         }
     }
