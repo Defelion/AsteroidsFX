@@ -29,6 +29,7 @@ replay_pid*
 /Player/target/
 /Bullet/target/
 /CommonBullet/target/
+/*/target/
 /.idea/
 /Astroid/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 /Astroid/target/generated-sources/plugin/HelpMojo.java
