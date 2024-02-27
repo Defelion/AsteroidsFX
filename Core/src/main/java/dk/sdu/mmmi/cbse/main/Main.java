@@ -26,6 +26,7 @@ import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -102,6 +103,10 @@ public class Main extends Application {
     }
 
     private void render() {
+        /*gameWindow.getChildren().clear();
+        Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        gameWindow.getChildren().add(text);*/
         new AnimationTimer() {
             private long then = 0;
 
@@ -128,7 +133,18 @@ public class Main extends Application {
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
+            /*if(polygon != null) {
+                gameWindow.getChildren().remove(polygon);
+                polygons.remove(polygon);
+                polygon = null;
+            }*/
             Polygon polygon = polygons.get(entity);
+            if(entity.getHealth() <= 0) {
+                world.removeEntity(entity);
+                gameWindow.getChildren().remove(polygon);
+                if(polygon != null) polygons.remove(polygon);
+                continue;
+            }
             if (polygon == null) {
                 polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity,polygon);

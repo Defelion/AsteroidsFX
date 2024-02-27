@@ -13,7 +13,7 @@ public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         int destroyedAsteroids = gameData.getDestroydAsteroids();
-        int diffculty = 10;
+        int diffculty = 2;
         if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);

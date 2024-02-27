@@ -22,15 +22,17 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             bullet.setX(bullet.getX() + Math.cos(rot) * bullet.getSpeed());
             bullet.setY(bullet.getY() + Math.sin(rot) * bullet.getSpeed());
 
-            /*double heigth = gameData.getDisplayWidth();
+            double heigth = gameData.getDisplayHeight();
+            double width = gameData.getDisplayWidth();
             if (
                     bullet.getX() < 0 ||
                     bullet.getX() > heigth ||
                     bullet.getY() < 0 ||
-                    bullet.getY() > heigth)
+                    bullet.getY() > width)
             {
-                world.removeEntity(bullet);
-            }*/
+                //world.removeEntity(bullet);
+                bullet.setHealth(0);
+            }
         }
     }
 
@@ -55,6 +57,7 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
                 fullSize,oneQuarter);
         bullet.setDamage(shooter.getDamage() * (1+gameData.getScore()/1000));
         bullet.setSpeed(3);
+        bullet.setHealth(1);
         bullet.setRotationSpeed(1);
         bullet.setPaint(shooter.getPaint());
         bullet.setX(shooter.getX());

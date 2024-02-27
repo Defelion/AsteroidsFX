@@ -44,7 +44,7 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                else if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*3)) {
+                if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*3)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
