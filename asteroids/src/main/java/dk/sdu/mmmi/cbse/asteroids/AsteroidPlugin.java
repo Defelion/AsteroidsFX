@@ -1,12 +1,11 @@
 package dk.sdu.mmmi.cbse.asteroids;
 
-import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
+import dk.sdu.mmmi.cbse.common.asteroids.Asteroids;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.util.Random;
 
@@ -14,7 +13,7 @@ public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         int destroyedAsteroids = gameData.getDestroydAsteroids();
-        int diffculty = 1;
+        int diffculty = 10;
         if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
@@ -25,14 +24,14 @@ public class AsteroidPlugin implements IGamePluginService {
     @Override
     public void stop(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
-            if (e.getClass() == Asteroid.class) {
+            if (e.getClass() == Asteroids.class) {
                 world.removeEntity(e);
             }
         }
     }
 
     public Entity createAsteroid(Entity e, GameData gameData) {
-        Entity Astroid = new Asteroid();
+        Entity Astroid = new Asteroids();
         Boolean isNew = Boolean.TRUE;
         if(e != null) {
             isNew = Boolean.FALSE;

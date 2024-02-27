@@ -10,5 +10,4 @@ module asteroids {
     requires javafx.graphics;
     provides IGamePluginService with AsteroidPlugin;
     provides IEntityProcessingService with AsteroidProcessor;
-    //provides IPostEntityProcessingService with AsteroidProcessor;
 }

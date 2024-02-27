@@ -14,7 +14,7 @@ public class EnemiesPlugin implements IGamePluginService {
     public void start(GameData gameData, World world) {
 
         int destroyedEnemies = gameData.getDestroyedEnemies();
-        int diffculty = 1;
+        int diffculty = 10;
         if(destroyedEnemies >= 10) diffculty = gameData.getDestroyedEnemies()/10;
         for(int i = 0; i < diffculty; i++) {
             Entity Enemy = createEnemy(gameData, diffculty);
