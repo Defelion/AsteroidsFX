@@ -18,7 +18,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-            
         for (Entity player : world.getEntities(Player.class)) {
             double maxHealth = (player.getHealth() + gameData.getScore() / 1000);
             double LostHealth = (maxHealth - player.getCurrenthealth());
@@ -50,6 +49,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 if (player.getY() < 0) { player.setY(gameData.getDisplayHeight()); }
                 if (player.getY() > gameData.getDisplayHeight()) { player.setY(0); }
             }
+            if(player.getHealth() <= 0) player.setDead(true);
         }
     }
 

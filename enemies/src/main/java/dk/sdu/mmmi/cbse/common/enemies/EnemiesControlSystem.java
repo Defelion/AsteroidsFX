@@ -77,6 +77,12 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 if(enemy.getRotation() < vectorAngle)
                     enemy.setRotation(enemy.getRotation() + enemy.getRotationSpeed());
 
+                if(enemy.getHealth() <= 0) {
+                    gameData.setDestroydAsteroids(gameData.getDestroydAsteroids()+1);
+                    gameData.setScore(gameData.getScore()+enemy.getSize());
+                    enemy.setDead(true);
+                }
+
                 if (enemy.getX() < 0) { enemy.setX(gameData.getDisplayWidth()); }
                 if (enemy.getX() > gameData.getDisplayWidth()) { enemy.setX(0); }
                 if (enemy.getY() < 0) { enemy.setY(gameData.getDisplayHeight()); }

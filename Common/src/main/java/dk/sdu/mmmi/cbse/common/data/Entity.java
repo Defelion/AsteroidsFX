@@ -24,6 +24,11 @@ public class Entity implements Serializable {
     private double maxShotTimer = 1;
     private double[] target;
     private double damage;
+    private Boolean dead = false;
+
+    public Boolean getDead() { return dead; }
+
+    public void setDead(Boolean dead) { this.dead = dead; }
 
     public double getDamage() { return damage; }
 

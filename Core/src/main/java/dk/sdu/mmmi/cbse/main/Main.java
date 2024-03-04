@@ -51,9 +51,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.LEFT)) {
@@ -103,10 +101,15 @@ public class Main extends Application {
     }
 
     private void render() {
-        /*gameWindow.getChildren().clear();
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        Text text = new Text(10, 20,
+            "Destroyed asteroids: "+gameData.getDestroydAsteroids()+
+                "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
+                "\nScore: "+gameData.getScore()
+                +"\nLog: "+gameData.getLog()
+        );
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);*/
+        gameWindow.getChildren().remove(text);
+        gameWindow.getChildren().add(text);
         new AnimationTimer() {
             private long then = 0;
 
@@ -126,20 +129,15 @@ public class Main extends Application {
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-        /*for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
-        }*/
+        }
     }
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            /*if(polygon != null) {
-                gameWindow.getChildren().remove(polygon);
-                polygons.remove(polygon);
-                polygon = null;
-            }*/
             Polygon polygon = polygons.get(entity);
-            if(entity.getHealth() <= 0) {
+            if(entity.getDead()) {
                 world.removeEntity(entity);
                 gameWindow.getChildren().remove(polygon);
                 if(polygon != null) polygons.remove(polygon);

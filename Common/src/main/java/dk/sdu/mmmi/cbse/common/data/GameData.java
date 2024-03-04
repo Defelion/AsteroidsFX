@@ -8,6 +8,7 @@ public class GameData {
     private int destroydAsteroids = 0;
     private int destroyedEnemies = 0;
     private double score = 0;
+    private  String log = "";
     public GameKeys getKeys() {
         return keys;
     }
@@ -39,4 +40,8 @@ public class GameData {
     public double getScore() { return score; }
 
     public void setScore(double score) { this.score = score; }
+
+    public String getLog() { return log; }
+
+    public void setLog(String log) { this.log = log; }
 }

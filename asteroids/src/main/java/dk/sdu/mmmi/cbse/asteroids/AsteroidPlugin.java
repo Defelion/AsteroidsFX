@@ -17,6 +17,7 @@ public class AsteroidPlugin implements IGamePluginService {
         if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
+            gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
             world.addEntity(asteroid);
         }
     }

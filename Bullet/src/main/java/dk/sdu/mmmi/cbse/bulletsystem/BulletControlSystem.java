@@ -33,6 +33,7 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
                 //world.removeEntity(bullet);
                 bullet.setHealth(0);
             }
+            if(bullet.getHealth() <= 0) bullet.setDead(true);
         }
     }
 
