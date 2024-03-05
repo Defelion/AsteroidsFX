@@ -16,6 +16,7 @@ public class AsteroidPlugin implements IGamePluginService {
         int destroyedAsteroids = gameData.getDestroydAsteroids();
         int diffculty = 2;
         if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
+        if(diffculty > 100) diffculty = 100;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
             //gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
@@ -43,27 +44,31 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     public Entity createAsteroid(Entity e, GameData gameData) {
-        Entity Astroid = new Asteroids();
-        Boolean isNew = Boolean.TRUE;
-        if(e != null) {
-            isNew = Boolean.FALSE;
-            Astroid.setPolyCoordinatesArray(createShape((e.getSize()/2)));
-            gameData.setLog(gameData.getLog()+"\nSplit Asteroid"+e.getID()+" shaped");
+        double size = 0;
+        if (e != null) size = (e.getSize()/2);
+        Entity Astroid = null;
+        if(size > 5 || e == null) {
+            Astroid = new Asteroids();
+            Boolean isNew = Boolean.TRUE;
+            if (e != null) {
+                isNew = Boolean.FALSE;
+                Astroid.setPolyCoordinatesArray(createShape(size));
+                //gameData.setLog(gameData.getLog() + "\nSplit Asteroid" + e.getID() + " shaped");
+            } else {
+                Random randSize = new Random();
+                Astroid.setSize(randSize.nextInt(10, 50));
+                Astroid.setPolyCoordinatesArray(createShape(Astroid.getSize()));
+                //gameData.setLog(gameData.getLog()+"\nAsteroid"+e.getID()+" shaped");
+            }
+            Astroid = setSpawn(Astroid, e, gameData, isNew);
+            Astroid.setPaint(Color.DARKORANGE);
+            Astroid.setHealth(Astroid.getSize());
+            Astroid.setDamage(Astroid.getSize() / 5);
+            Astroid.setCurrenthealth(Astroid.getHealth());
+            Random speed = new Random();
+            Astroid.setSpeed(speed.nextDouble(1, 2));
+            Astroid.setRotationSpeed(1);
         }
-        else {
-            Random randSize = new Random();
-            Astroid.setSize(randSize.nextInt(10,50));
-            Astroid.setPolyCoordinatesArray(createShape(Astroid.getSize()));
-            //gameData.setLog(gameData.getLog()+"\nAsteroid"+e.getID()+" shaped");
-        }
-        Astroid = setSpawn(Astroid, e, gameData, isNew);
-        Astroid.setPaint(Color.DARKORANGE);
-        Astroid.setHealth(Astroid.getSize());
-        Astroid.setDamage(Astroid.getSize()/5);
-        Astroid.setCurrenthealth(Astroid.getHealth());
-        Random speed = new Random();
-        Astroid.setSpeed(speed.nextDouble(1,2));
-        Astroid.setRotationSpeed(1);
         return Astroid;
     }
 
@@ -101,14 +106,14 @@ public class AsteroidPlugin implements IGamePluginService {
             }
         }
         else {
-            Astroid.setX(e.getX());
-            Astroid.setY(e.getY());
+            Astroid.setX(point.nextDouble((e.getX()-(e.getSize()/2)),(e.getX()+(e.getSize()/2))));
+            Astroid.setY(point.nextDouble((e.getY()-(e.getSize()/2)),(e.getY()+(e.getSize()/2))));
             Astroid.setRotation(point.nextDouble(0,360));
         }
         return Astroid;
     }
 
-    private double[] createShape (int size) {
+    private double[] createShape (double size) {
         Random randSize = new Random();
         double big = randSize.nextDouble((size/2),size);
         double small = randSize.nextDouble(size/2);

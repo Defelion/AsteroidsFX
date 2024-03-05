@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.asteroids.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.playersystem.Player;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -23,17 +24,17 @@ public class AsteroidProcessor implements IEntityProcessingService {
                 int destroyedAsteroids = gameData.getDestroydAsteroids();
                 int diffculty = 2;
                 if(destroyedAsteroids >= 10) diffculty += gameData.getDestroydAsteroids()/10;
-                for(int i = 0; i < diffculty; i++) {
-                    /*getIAsteroidSplitters().stream().findFirst().ifPresent(
-                            spi -> {
-                                world.addEntity(spi.createSplitAsteroid(asteroid, world, gameData));
-                            }
-                    );*/
-                    /*AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
-                    world.addEntity(asteroidPlugin.createAsteroid(asteroid,gameData));*/
+                AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
+                if(asteroid.getHealth() <= 0){
+                    for(int i = 0; i < 4; i++) {
+                        Entity newAst = asteroidPlugin.createAsteroid(asteroid,gameData);
+                        if(newAst != null) world.addEntity(newAst);
+                    }
                 }
+
                 gameData.setDestroydAsteroids(gameData.getDestroydAsteroids() + 1);
-                gameData.setScore(gameData.getScore() + asteroid.getSize());
+                if(world.getEntities(Player.class).size() > 0)
+                    gameData.setScore(gameData.getScore() + asteroid.getSize());
                 asteroid.setDead(true);
                 continue;
             }
@@ -46,6 +47,8 @@ public class AsteroidProcessor implements IEntityProcessingService {
             if (asteroid.getX() > gameData.getDisplayWidth()) { asteroid.setX(0); }
             if (asteroid.getY() < 0) { asteroid.setY(gameData.getDisplayHeight()); }
             if (asteroid.getY() > gameData.getDisplayHeight()) { asteroid.setY(0); }
+            if(asteroid.getShotTimer() == gameData.getImmortalTime()) asteroid.setImmortal(false);
+            else asteroid.setShotTimer(asteroid.getShotTimer()+1);
         }
     }
 

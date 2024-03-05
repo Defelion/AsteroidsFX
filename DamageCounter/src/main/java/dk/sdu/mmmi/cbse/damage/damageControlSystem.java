@@ -3,15 +3,7 @@ package dk.sdu.mmmi.cbse.damage;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
-
-import java.io.Console;
-import java.util.Collection;
-import java.util.List;
 
 public class damageControlSystem implements IPostEntityProcessingService {
     /**
@@ -22,7 +14,12 @@ public class damageControlSystem implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for(Entity entity1 : world.getEntities()) {
             for(Entity entity2 : world.getEntities()) {
-                if(entity1 == entity2 || entity1.getPaint() == entity2.getPaint()) continue;
+
+                if(entity1 == entity2 ||
+                        entity1.getPaint() == entity2.getPaint() ||
+                        entity1.getImmortal() ||
+                        entity2.getImmortal())
+                    continue;
                 if(collision(entity1,entity2,gameData)) {
                     entity1.setHealth((entity1.getHealth()-entity2.getDamage()));
                     entity2.setHealth((entity2.getHealth()-entity1.getDamage()));

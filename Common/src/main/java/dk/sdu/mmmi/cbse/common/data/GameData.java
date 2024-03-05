@@ -9,6 +9,12 @@ public class GameData {
     private int destroyedEnemies = 0;
     private double score = 0;
     private  String log = "";
+    private int immortalTime = 50;
+
+    public int getImmortalTime() { return immortalTime; }
+
+    public void setImmortalTime(int immortalTime) { this.immortalTime = immortalTime; }
+
     public GameKeys getKeys() {
         return keys;
     }

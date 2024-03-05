@@ -131,8 +131,8 @@ public class Main extends Application {
                         "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
                         "\nScore: "+gameData.getScore()
                         +"\namount of elements: "+gameWindow.getChildren().size()
-                        +"\nLog: "+gameData.getLog()
         );
+        if(gameData.getLog() != "") text.setText(text.getText()+"\nLog:"+gameData.getLog());
         text.setId("text");
         int count = 0;
         for(Node node : gameWindow.getChildren()) {

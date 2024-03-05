@@ -25,6 +25,11 @@ public class Entity implements Serializable {
     private double[] target;
     private double damage;
     private Boolean dead = false;
+    private Boolean immortal = true;
+
+    public Boolean getImmortal() { return immortal; }
+
+    public void setImmortal(Boolean immortal) { this.immortal = immortal; }
 
     public Boolean getDead() { return dead; }
 

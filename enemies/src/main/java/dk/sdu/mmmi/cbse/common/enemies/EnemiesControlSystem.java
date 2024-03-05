@@ -25,7 +25,8 @@ public class EnemiesControlSystem implements IEntityProcessingService {
         for (Entity enemy : world.getEntities(Enemy.class)) {
             if(enemy.getHealth() <= 0) {
                 gameData.setDestroyedEnemies(gameData.getDestroyedEnemies() + 1);
-                gameData.setScore(gameData.getScore() + enemy.getSize());
+                if(world.getEntities(Player.class).size() > 0)
+                    gameData.setScore(gameData.getScore() + enemy.getSize());
                 enemy.setDead(true);
                 break;
             }
@@ -34,7 +35,6 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
                 enemy.setX(enemy.getX() + changeX * enemy.getSpeed());
                 enemy.setY(enemy.getY() + changeY * enemy.getSpeed());
-
                 if(enemy.getShotTimer() == (enemy.getMaxShotTimer()/4)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
@@ -50,13 +50,15 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                Entity Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
-                if(enemy.getShotTimer() == enemy.getMaxShotTimer()) {
+                Entity Player = null;
+                if(world.getEntities(Player.class).size() > 0) Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
+                if(enemy.getShotTimer() >= enemy.getMaxShotTimer()) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                     enemy.setShotTimer(0);
-                    if(targetPlayer(enemy,world,Player)) {
+                    enemy.setImmortal(false);
+                    if(targetPlayer(enemy,Player)) {
                         double[] target = new double[]{
                                 Player.getX(),
                                 Player.getY()
@@ -74,7 +76,7 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 }
                 else {
                     enemy.setShotTimer((enemy.getShotTimer()+1));
-                    if(targetPlayer(enemy,world,Player)) {
+                    if(targetPlayer(enemy,Player)) {
                         double[] target = new double[]{
                                 Player.getX(),
                                 Player.getY()
@@ -102,14 +104,16 @@ public class EnemiesControlSystem implements IEntityProcessingService {
 
     }
 
-    private boolean targetPlayer (Entity enemy, World world, Entity player) {
+    private boolean targetPlayer (Entity enemy, Entity player) {
         boolean playerTarget = false;
-        Point2D enemyPoint = new Point2D(enemy.getX(),enemy.getY());
-        Point2D playerPoint = new Point2D(player.getX(),player.getY());
-        double distance = enemyPoint.distance(playerPoint);
+        if(player != null) {
+            Point2D enemyPoint = new Point2D(enemy.getX(), enemy.getY());
+            Point2D playerPoint = new Point2D(player.getX(), player.getY());
+            double distance = enemyPoint.distance(playerPoint);
 
-        if(distance < (enemy.getSize()*4)) {
-            playerTarget = true;
+            if (distance <= (enemy.getSize() * 4)) {
+                playerTarget = true;
+            }
         }
         return playerTarget;
     }

@@ -14,16 +14,16 @@ public class AsteroidPostProcessor implements IPostEntityProcessingService{
      */
     @Override
     public void process(GameData gameData, World world) {
-        AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
         if(world.getEntities(Asteroids.class).size() < 1){
+            AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
             asteroidPlugin.start(gameData,world);
         }
         else {
-            for(Entity Asteroid : world.getEntities(Asteroids.class)) {
+            /*for(Entity Asteroid : world.getEntities(Asteroids.class)) {
                 if(Asteroid.getHealth() <= 0){
-                    //asteroidPlugin.start(gameData, world, Asteroid);
+                    asteroidPlugin.start(gameData, world, Asteroid);
                 }
-            }
+            }*/
         }
     }
 }

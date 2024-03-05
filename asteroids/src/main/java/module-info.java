@@ -9,6 +9,7 @@ module asteroids {
     requires Common;
     requires CommonAsteroids;
     requires javafx.graphics;
+    requires Player;
     provides IGamePluginService with AsteroidPlugin;
     provides IEntityProcessingService with AsteroidProcessor;
     provides IPostEntityProcessingService with AsteroidPostProcessor;

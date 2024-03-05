@@ -12,10 +12,10 @@ public class EnemiesPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
         int destroyedEnemies = gameData.getDestroyedEnemies();
         int diffculty = 1;
-        if(destroyedEnemies >= 10) diffculty = gameData.getDestroyedEnemies()/10;
+        if(destroyedEnemies >= 10) diffculty += gameData.getDestroyedEnemies()/10;
+        if(diffculty > 100) diffculty = 100;
         for(int i = 0; i < diffculty; i++) {
             Entity Enemy = createEnemy(gameData, diffculty);
             //gameData.setLog(gameData.getLog()+"\nEnemy"+i+" Created");
@@ -34,9 +34,11 @@ public class EnemiesPlugin implements IGamePluginService {
 
     private Entity createEnemy (GameData gameData, int Difficulty) {
         Entity Enemy = new Enemy();
-        Enemy = setSpawn(gameData);
-        Enemy.setPaint(Color.RED);
         Random size = new Random();
+        Enemy = setSpawn(gameData);
+        int choice = size.nextInt(1,2);
+        if(choice == 1) Enemy.setPaint(Color.RED);
+        else Enemy.setPaint(Color.GREEN);
         Enemy.setSize(size.nextInt(5,25));
         Enemy.setPolyCoordinatesArray(createShape(Enemy.getSize()));
         Enemy.setHealth((Enemy.getHealth()+Difficulty));
@@ -44,7 +46,10 @@ public class EnemiesPlugin implements IGamePluginService {
         Enemy.setDamage((1+Difficulty)-(gameData.getScore()/1000));
         Enemy.setSpeed((1+(Difficulty/20)));
         Enemy.setCurrenthealth(Enemy.getHealth());
-        Enemy.setMaxShotTimer(((Enemy.getSize()*(10+gameData.getScore()/1000))-(Difficulty/5)));
+        double shot = ((Enemy.getSize()*(10+gameData.getScore()/1000))-(Difficulty/5));
+        if(shot < 20) shot = 20;
+        gameData.setLog(gameData.getLog()+"\nShot: "+shot);
+        Enemy.setMaxShotTimer(shot);
         Enemy.setShotTimer(Enemy.getMaxShotTimer());
         Random randPoint = new Random();
         double[] target = new double[]{
