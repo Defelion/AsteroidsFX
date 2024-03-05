@@ -101,15 +101,6 @@ public class Main extends Application {
     }
 
     private void render() {
-        Text text = new Text(10, 20,
-            "Destroyed asteroids: "+gameData.getDestroydAsteroids()+
-                "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
-                "\nScore: "+gameData.getScore()
-                +"\nLog: "+gameData.getLog()
-        );
-        gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().remove(text);
-        gameWindow.getChildren().add(text);
         new AnimationTimer() {
             private long then = 0;
 
@@ -135,6 +126,24 @@ public class Main extends Application {
     }
 
     private void draw() {
+        Text text = new Text(10, 20,
+                "Destroyed asteroids: "+gameData.getDestroydAsteroids()+
+                        "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
+                        "\nScore: "+gameData.getScore()
+                        +"\namount of elements: "+gameWindow.getChildren().size()
+                        +"\nLog: "+gameData.getLog()
+        );
+        text.setId("text");
+        int count = 0;
+        for(Node node : gameWindow.getChildren()) {
+            if(node.getId() == "text") {
+                gameWindow.getChildren().remove(node);
+                gameWindow.getChildren().add(text);
+                count++;
+                break;
+            }
+        }
+        if(count == 0) gameWindow.getChildren().add(text);
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if(entity.getDead()) {
@@ -152,6 +161,7 @@ public class Main extends Application {
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getPaint());
+            polygon.accessibleTextProperty().setValue(String.valueOf(entity.getHealth()));
         }
     }
 

@@ -1,6 +1,7 @@
 package dk.sdu.mmmi.cbse.asteroids;
 
 import dk.sdu.mmmi.cbse.common.asteroids.Asteroids;
+import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -17,7 +18,17 @@ public class AsteroidPlugin implements IGamePluginService {
         if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
-            gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
+            //gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
+            world.addEntity(asteroid);
+        }
+    }
+
+    public void start(GameData gameData, World world, Entity Asteroid) {
+        int destroyedAsteroids = gameData.getDestroydAsteroids();
+        int diffculty = 2;
+        if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
+        for(int i = 0; i < diffculty; i++) {
+            Entity asteroid = createAsteroid(Asteroid, gameData);
             world.addEntity(asteroid);
         }
     }
@@ -37,11 +48,13 @@ public class AsteroidPlugin implements IGamePluginService {
         if(e != null) {
             isNew = Boolean.FALSE;
             Astroid.setPolyCoordinatesArray(createShape((e.getSize()/2)));
+            gameData.setLog(gameData.getLog()+"\nSplit Asteroid"+e.getID()+" shaped");
         }
         else {
             Random randSize = new Random();
             Astroid.setSize(randSize.nextInt(10,50));
             Astroid.setPolyCoordinatesArray(createShape(Astroid.getSize()));
+            //gameData.setLog(gameData.getLog()+"\nAsteroid"+e.getID()+" shaped");
         }
         Astroid = setSpawn(Astroid, e, gameData, isNew);
         Astroid.setPaint(Color.DARKORANGE);
@@ -90,7 +103,7 @@ public class AsteroidPlugin implements IGamePluginService {
         else {
             Astroid.setX(e.getX());
             Astroid.setY(e.getY());
-            Astroid.setRotation((Math.random() * 360));
+            Astroid.setRotation(point.nextDouble(0,360));
         }
         return Astroid;
     }

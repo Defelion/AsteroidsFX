@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.playersystem.Player;
+import javafx.geometry.Point2D;
 
 import java.util.Collection;
 import java.util.Random;
@@ -22,11 +23,11 @@ public class EnemiesControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            double maxHealth = (enemy.getHealth() + gameData.getScore() / 1000);
-            double LostHealth = (maxHealth - enemy.getCurrenthealth());
-            enemy.setCurrenthealth(maxHealth - LostHealth);
-            if(enemy.getCurrenthealth() <= 0) {
-                world.removeEntity(enemy);
+            if(enemy.getHealth() <= 0) {
+                gameData.setDestroyedEnemies(gameData.getDestroyedEnemies() + 1);
+                gameData.setScore(gameData.getScore() + enemy.getSize());
+                enemy.setDead(true);
+                break;
             }
             else {
                 double changeX = Math.cos(Math.toRadians(enemy.getRotation()));
@@ -39,22 +40,30 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*2)) {
+                else if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*2)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*3)) {
+                else if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*3)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
+                Entity Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
                 if(enemy.getShotTimer() == enemy.getMaxShotTimer()) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                     enemy.setShotTimer(0);
-                    if(!targetPlayer(enemy, world)) {
+                    if(targetPlayer(enemy,world,Player)) {
+                        double[] target = new double[]{
+                                Player.getX(),
+                                Player.getY()
+                        };
+                        enemy.setTarget(target);
+                    }
+                    else {
                         Random randPoint = new Random();
                         double[] target = new double[]{
                                 randPoint.nextDouble(gameData.getDisplayWidth()),
@@ -65,23 +74,21 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 }
                 else {
                     enemy.setShotTimer((enemy.getShotTimer()+1));
-                    targetPlayer(enemy, world);
+                    if(targetPlayer(enemy,world,Player)) {
+                        double[] target = new double[]{
+                                Player.getX(),
+                                Player.getY()
+                        };
+                        enemy.setTarget(target);
+                    }
                 }
 
                 double vectorAngle = ((enemy.getY() - enemy.getTarget()[1])/(enemy.getX() - enemy.getTarget()[0]));
-                vectorAngle = vectorAngle + Math.PI*2;
-                vectorAngle = vectorAngle * (180 / Math.PI);
 
-                if(enemy.getRotation() > vectorAngle)
+                if(enemy.getRotation() > Math.toDegrees(vectorAngle))
                     enemy.setRotation(enemy.getRotation() - enemy.getRotationSpeed());
-                if(enemy.getRotation() < vectorAngle)
+                if(enemy.getRotation() < Math.toDegrees(vectorAngle))
                     enemy.setRotation(enemy.getRotation() + enemy.getRotationSpeed());
-
-                if(enemy.getHealth() <= 0) {
-                    gameData.setDestroydAsteroids(gameData.getDestroydAsteroids()+1);
-                    gameData.setScore(gameData.getScore()+enemy.getSize());
-                    enemy.setDead(true);
-                }
 
                 if (enemy.getX() < 0) { enemy.setX(gameData.getDisplayWidth()); }
                 if (enemy.getX() > gameData.getDisplayWidth()) { enemy.setX(0); }
@@ -95,21 +102,13 @@ public class EnemiesControlSystem implements IEntityProcessingService {
 
     }
 
-    private boolean targetPlayer (Entity enemy, World world) {
+    private boolean targetPlayer (Entity enemy, World world, Entity player) {
         boolean playerTarget = false;
-        Entity Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
-        double distance = (
-                Math.sqrt(
-                        (enemy.getX() - Player.getX()) * (enemy.getX() - Player.getX()) +
-                                (enemy.getY() - Player.getY()) * (enemy.getY() - Player.getY())
-                )
-        );
+        Point2D enemyPoint = new Point2D(enemy.getX(),enemy.getY());
+        Point2D playerPoint = new Point2D(player.getX(),player.getY());
+        double distance = enemyPoint.distance(playerPoint);
+
         if(distance < (enemy.getSize()*4)) {
-            double[] target = new double[]{
-                    Player.getX(),
-                    Player.getY()
-            };
-            enemy.setTarget(target);
             playerTarget = true;
         }
         return playerTarget;
