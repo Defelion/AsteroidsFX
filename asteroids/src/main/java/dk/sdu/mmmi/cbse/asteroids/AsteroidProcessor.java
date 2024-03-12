@@ -21,9 +21,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         for(Entity asteroid : world.getEntities(Asteroids.class)) {
             if(asteroid.getHealth() <= 0) {
-                int destroyedAsteroids = gameData.getDestroydAsteroids();
-                int diffculty = 2;
-                if(destroyedAsteroids >= 10) diffculty += gameData.getDestroydAsteroids()/10;
                 AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
                 if(asteroid.getHealth() <= 0){
                     for(int i = 0; i < 4; i++) {
@@ -38,17 +35,17 @@ public class AsteroidProcessor implements IEntityProcessingService {
                 asteroid.setDead(true);
                 continue;
             }
+
+            if(asteroid.getShotTimer() == gameData.getImmortalTime()) asteroid.setImmortal(false);
+            else asteroid.setShotTimer(asteroid.getShotTimer()+1);
+
             asteroid.setX(asteroid.getX() + Math.cos(Math.toRadians(asteroid.getRotation())) * asteroid.getSpeed());
             asteroid.setY(asteroid.getY() + Math.sin(Math.toRadians(asteroid.getRotation())) * asteroid.getSpeed());
-
-            //gameData.setDestroydAsteroids(gameData.getDestroydAsteroids()+1);
 
             if (asteroid.getX() < 0) { asteroid.setX(gameData.getDisplayWidth()); }
             if (asteroid.getX() > gameData.getDisplayWidth()) { asteroid.setX(0); }
             if (asteroid.getY() < 0) { asteroid.setY(gameData.getDisplayHeight()); }
             if (asteroid.getY() > gameData.getDisplayHeight()) { asteroid.setY(0); }
-            if(asteroid.getShotTimer() == gameData.getImmortalTime()) asteroid.setImmortal(false);
-            else asteroid.setShotTimer(asteroid.getShotTimer()+1);
         }
     }
 

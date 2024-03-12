@@ -21,16 +21,12 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             double rot = Math.toRadians(bullet.getRotation());
             bullet.setX(bullet.getX() + Math.cos(rot) * bullet.getSpeed());
             bullet.setY(bullet.getY() + Math.sin(rot) * bullet.getSpeed());
-
-            double heigth = gameData.getDisplayHeight();
-            double width = gameData.getDisplayWidth();
             if (
-                    bullet.getX() < 0 ||
-                    bullet.getX() > heigth ||
-                    bullet.getY() < 0 ||
-                    bullet.getY() > width)
+                    bullet.getX() <= 0 ||
+                    bullet.getX() >= gameData.getDisplayHeight() ||
+                    bullet.getY() <= 0 ||
+                    bullet.getY() >= gameData.getDisplayWidth())
             {
-                //world.removeEntity(bullet);
                 bullet.setHealth(0);
             }
             if(bullet.getHealth() <= 0) bullet.setDead(true);

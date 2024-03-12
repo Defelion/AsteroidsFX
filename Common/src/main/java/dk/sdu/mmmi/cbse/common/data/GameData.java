@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.cbse.common.data;
 
+import javafx.scene.layout.Pane;
+
 public class GameData {
 
     private int displayWidth  = 800 ;
@@ -10,6 +12,18 @@ public class GameData {
     private double score = 0;
     private  String log = "";
     private int immortalTime = 50;
+    private boolean started = false;
+    private Pane Menu = new Pane();
+
+    public boolean isStarted() { return started; }
+
+    public void setStarted(boolean started) { this.started = started; }
+
+    public Pane getMenu() {
+        return Menu;
+    }
+
+    public void setMenu (Pane Menu) { this.Menu = Menu; }
 
     public int getImmortalTime() { return immortalTime; }
 

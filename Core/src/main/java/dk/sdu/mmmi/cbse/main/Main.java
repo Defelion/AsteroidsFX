@@ -25,11 +25,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
@@ -52,6 +53,11 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        Paint bgColor = Color.BLACK;
+        BackgroundFill bgFill = new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY);
+        Background bg = new Background(bgFill);
+        gameWindow.setBackground(bg);
+        gameWindow.autosize();
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.LEFT)) {
@@ -62,6 +68,21 @@ public class Main extends Application {
             }
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
+            }
+            if (event.getCode().equals(KeyCode.DOWN)) {
+                gameData.getKeys().setKey(GameKeys.DOWN, true);
+            }
+            if (event.getCode().equals(KeyCode.A)) {
+                gameData.getKeys().setKey(GameKeys.LEFT, true);
+            }
+            if (event.getCode().equals(KeyCode.D)) {
+                gameData.getKeys().setKey(GameKeys.RIGHT, true);
+            }
+            if (event.getCode().equals(KeyCode.W)) {
+                gameData.getKeys().setKey(GameKeys.UP, true);
+            }
+            if (event.getCode().equals(KeyCode.S)) {
+                gameData.getKeys().setKey(GameKeys.DOWN, true);
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
                 gameData.getKeys().setKey(GameKeys.SPACE, true);
@@ -75,6 +96,21 @@ public class Main extends Application {
                 gameData.getKeys().setKey(GameKeys.RIGHT, false);
             }
             if (event.getCode().equals(KeyCode.UP)) {
+                gameData.getKeys().setKey(GameKeys.UP, false);
+            }
+            if (event.getCode().equals(KeyCode.DOWN)) {
+                gameData.getKeys().setKey(GameKeys.DOWN, false);
+            }
+            if (event.getCode().equals(KeyCode.S)) {
+                gameData.getKeys().setKey(GameKeys.DOWN, false);
+            }
+            if (event.getCode().equals(KeyCode.A)) {
+                gameData.getKeys().setKey(GameKeys.LEFT, false);
+            }
+            if (event.getCode().equals(KeyCode.D)) {
+                gameData.getKeys().setKey(GameKeys.RIGHT, false);
+            }
+            if (event.getCode().equals(KeyCode.W)) {
                 gameData.getKeys().setKey(GameKeys.UP, false);
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
@@ -132,6 +168,9 @@ public class Main extends Application {
                         "\nScore: "+gameData.getScore()
                         +"\namount of elements: "+gameWindow.getChildren().size()
         );
+        gameData.setDisplayWidth((int) gameWindow.getWidth());
+        gameData.setDisplayHeight((int) gameWindow.getHeight());
+        text.setFill(Color.WHITE);
         if(gameData.getLog() != "") text.setText(text.getText()+"\nLog:"+gameData.getLog());
         text.setId("text");
         int count = 0;
@@ -161,7 +200,7 @@ public class Main extends Application {
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getPaint());
-            polygon.accessibleTextProperty().setValue(String.valueOf(entity.getHealth()));
+            //polygon.accessibleTextProperty().setValue(String.valueOf(entity.getHealth()));
         }
     }
 

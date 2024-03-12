@@ -13,9 +13,9 @@ public class EnemiesPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         int destroyedEnemies = gameData.getDestroyedEnemies();
-        int diffculty = 1;
+        int diffculty = 2;
         if(destroyedEnemies >= 10) diffculty += gameData.getDestroyedEnemies()/10;
-        if(diffculty > 100) diffculty = 100;
+        if(diffculty > 200) diffculty = 200;
         for(int i = 0; i < diffculty; i++) {
             Entity Enemy = createEnemy(gameData, diffculty);
             //gameData.setLog(gameData.getLog()+"\nEnemy"+i+" Created");
@@ -36,8 +36,8 @@ public class EnemiesPlugin implements IGamePluginService {
         Entity Enemy = new Enemy();
         Random size = new Random();
         Enemy = setSpawn(gameData);
-        int choice = size.nextInt(1,2);
-        if(choice == 1) Enemy.setPaint(Color.RED);
+        int choice = size.nextInt(0,100);
+        if(choice <= 50) Enemy.setPaint(Color.RED);
         else Enemy.setPaint(Color.GREEN);
         Enemy.setSize(size.nextInt(5,25));
         Enemy.setPolyCoordinatesArray(createShape(Enemy.getSize()));
@@ -48,9 +48,10 @@ public class EnemiesPlugin implements IGamePluginService {
         Enemy.setCurrenthealth(Enemy.getHealth());
         double shot = ((Enemy.getSize()*(10+gameData.getScore()/1000))-(Difficulty/5));
         if(shot < 20) shot = 20;
-        gameData.setLog(gameData.getLog()+"\nShot: "+shot);
+        //gameData.setLog(gameData.getLog()+"\nShot: "+shot);
         Enemy.setMaxShotTimer(shot);
         Enemy.setShotTimer(Enemy.getMaxShotTimer());
+
         Random randPoint = new Random();
         double[] target = new double[]{
                 randPoint.nextDouble(gameData.getDisplayWidth()),
@@ -72,34 +73,36 @@ public class EnemiesPlugin implements IGamePluginService {
     }
     private Entity setSpawn(GameData gameData) {
         Entity Enemy = new Enemy();
-        Random side = new Random(4);
-        Random xpoint = new Random(gameData.getDisplayWidth());
-        Random ypoint = new Random(gameData.getDisplayHeight());
+        Random side = new Random();
+        Random xpoint = new Random();
+        Random ypoint = new Random();
         Random point = new Random();
         switch (side.nextInt(4)){
             case 1:
                 Enemy.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
                 Enemy.setY(gameData.getDisplayHeight());
-                Enemy.setRotation(point.nextDouble(0,180));
                 break;
             case 2:
                 Enemy.setX(0);
                 Enemy.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
-                Enemy.setRotation(point.nextDouble(90,270));
                 break;
             case 3:
                 Enemy.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
-                Enemy.setRotation(point.nextDouble(180,360));
                 Enemy.setY(0);
                 break;
             default:
                 Enemy.setX(gameData.getDisplayWidth());
                 Enemy.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
-                Random height = new Random(2);
-                if(height.nextInt(1,2) == 2) Enemy.setRotation(point.nextDouble(270,360));
-                else Enemy.setRotation(point.nextDouble(0,90));
                 break;
         }
+
+        double[] target = new double[]{
+                point.nextDouble(gameData.getDisplayWidth()),
+                point.nextDouble(gameData.getDisplayHeight())
+        };
+        double vectorAngle = ((Enemy.getY() - target[1])/(Enemy.getX() - target[0]));
+
+        Enemy.setRotation(Math.toDegrees(vectorAngle));
         return Enemy;
     }
 }

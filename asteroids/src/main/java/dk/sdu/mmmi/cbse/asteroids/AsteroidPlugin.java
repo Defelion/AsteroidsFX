@@ -1,16 +1,15 @@
 package dk.sdu.mmmi.cbse.asteroids;
 
 import dk.sdu.mmmi.cbse.common.asteroids.Asteroids;
-import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import javafx.scene.paint.Color;
-
 import java.util.Random;
 
 public class AsteroidPlugin implements IGamePluginService {
+
     @Override
     public void start(GameData gameData, World world) {
         int destroyedAsteroids = gameData.getDestroydAsteroids();
@@ -20,16 +19,6 @@ public class AsteroidPlugin implements IGamePluginService {
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
             //gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
-            world.addEntity(asteroid);
-        }
-    }
-
-    public void start(GameData gameData, World world, Entity Asteroid) {
-        int destroyedAsteroids = gameData.getDestroydAsteroids();
-        int diffculty = 2;
-        if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
-        for(int i = 0; i < diffculty; i++) {
-            Entity asteroid = createAsteroid(Asteroid, gameData);
             world.addEntity(asteroid);
         }
     }
@@ -73,42 +62,47 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     private Entity setSpawn(Entity Astroid, Entity e, GameData gameData, Boolean isNew) {
-        Random side = new Random(4);
-        Random xpoint = new Random(gameData.getDisplayWidth());
-        Random ypoint = new Random(gameData.getDisplayHeight());
+        Random side = new Random();
+        Random xpoint = new Random();
+        Random ypoint = new Random();
         Random point = new Random();
+        boolean notSamePoint = true;
         if(isNew) {
-            switch (side.nextInt(1,4)){
-                case 1:
-                    Astroid.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
-                    Astroid.setY(gameData.getDisplayHeight());
-                    Astroid.setRotation(point.nextDouble(0,180));
-                    break;
-                case 2:
-                    Astroid.setX(0);
-                    Astroid.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
-                    Astroid.setRotation(point.nextDouble(90,270));
-                    break;
-                case 3:
-                    Astroid.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
-                    Astroid.setRotation(point.nextDouble(180,360));
-                    Astroid.setY(0);
-                    break;
-                default:
-                    Astroid.setX(gameData.getDisplayWidth());
-                    Astroid.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
-                    Random height = new Random(2);
-                    if(height.nextInt(1,2) == 2)
-                        Astroid.setRotation(point.nextDouble(270,360));
-                    else
-                        Astroid.setRotation(point.nextDouble(0,90));
-                    break;
-            }
+                switch (side.nextInt(1,4)){
+                    case 1:
+                        Astroid.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
+                        Astroid.setY(gameData.getDisplayHeight());
+                        break;
+                    case 2:
+                        Astroid.setX(0);
+                        Astroid.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
+                        break;
+                    case 3:
+                        Astroid.setX(xpoint.nextDouble(gameData.getDisplayWidth()));
+                        Astroid.setY(0);
+                        break;
+                    default:
+                        Astroid.setX(gameData.getDisplayWidth());
+                        Astroid.setY(ypoint.nextDouble(gameData.getDisplayHeight()));
+                        break;
+                }
+
+                double[] target = new double[]{
+                        point.nextDouble(gameData.getDisplayWidth()),
+                        point.nextDouble(gameData.getDisplayHeight())
+                };
+                double vectorAngle = ((Astroid.getY() - target[1])/(Astroid.getX() - target[0]));
+
+                Astroid.setRotation(Math.toDegrees(vectorAngle));
+                //System.out.println("X: "+Astroid.getX()+" Y: "+Astroid.getY());
+
         }
         else {
             Astroid.setX(point.nextDouble((e.getX()-(e.getSize()/2)),(e.getX()+(e.getSize()/2))));
             Astroid.setY(point.nextDouble((e.getY()-(e.getSize()/2)),(e.getY()+(e.getSize()/2))));
-            Astroid.setRotation(point.nextDouble(0,360));
+            double vectorAngle = ((Astroid.getY() - e.getY())/(Astroid.getX() - e.getX()));
+            Astroid.setRotation(Math.toDegrees(vectorAngle));
+            Astroid.setSpeed((e.getSpeed()*2));
         }
         return Astroid;
     }

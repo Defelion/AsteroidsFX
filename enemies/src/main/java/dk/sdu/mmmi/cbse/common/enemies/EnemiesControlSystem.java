@@ -35,29 +35,35 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 double changeY = Math.sin(Math.toRadians(enemy.getRotation()));
                 enemy.setX(enemy.getX() + changeX * enemy.getSpeed());
                 enemy.setY(enemy.getY() + changeY * enemy.getSpeed());
-                if(enemy.getShotTimer() == (enemy.getMaxShotTimer()/4)) {
+                double shotTimer = enemy.getShotTimer();
+                double maxShotTimer = enemy.getMaxShotTimer();
+                if(maxShotTimer > 300) {
+                    maxShotTimer = maxShotTimer/2;
+                    enemy.setMaxShotTimer(maxShotTimer);
+                }
+                if(shotTimer == (maxShotTimer/4)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                else if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*2)) {
+                else if(shotTimer == ((maxShotTimer/4)*2)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
-                else if(enemy.getShotTimer() == ((enemy.getMaxShotTimer()/4)*3)) {
+                else if(shotTimer == ((maxShotTimer/4)*3)) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                 }
+                if(enemy.getShotTimer() >= gameData.getImmortalTime()) enemy.setImmortal(false);
                 Entity Player = null;
                 if(world.getEntities(Player.class).size() > 0) Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
-                if(enemy.getShotTimer() >= enemy.getMaxShotTimer()) {
+                if(shotTimer >= maxShotTimer) {
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );
                     enemy.setShotTimer(0);
-                    enemy.setImmortal(false);
                     if(targetPlayer(enemy,Player)) {
                         double[] target = new double[]{
                                 Player.getX(),

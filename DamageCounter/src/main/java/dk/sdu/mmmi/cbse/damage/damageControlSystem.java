@@ -14,7 +14,6 @@ public class damageControlSystem implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for(Entity entity1 : world.getEntities()) {
             for(Entity entity2 : world.getEntities()) {
-
                 if(entity1 == entity2 ||
                         entity1.getPaint() == entity2.getPaint() ||
                         entity1.getImmortal() ||
@@ -37,9 +36,7 @@ public class damageControlSystem implements IPostEntityProcessingService {
             )
         );
         if(distance <= e1.getSize() || distance <= e2.getSize()){
-            /*Shape s1 = new Polygon(e1.getPolygonCoordinates());
-            Shape s2 = new Polygon(e2.getPolygonCoordinates());
-            if(s1.intersects(s2.getBoundsInParent()))*/ touching = true;
+            touching = true;
         }
         return touching;
     }

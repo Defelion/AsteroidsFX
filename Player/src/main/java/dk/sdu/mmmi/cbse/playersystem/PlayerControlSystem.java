@@ -37,11 +37,13 @@ public class PlayerControlSystem implements IEntityProcessingService {
                         player.setY(player.getY() + changeY * player.getSpeed());
                     }
                     if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                        getBulletSPIs().stream().findFirst().ifPresent(
+                        if(player.getShotTimer() == (player.getMaxShotTimer()/2) || player.getShotTimer() >= player.getMaxShotTimer()) {
+                            getBulletSPIs().stream().findFirst().ifPresent(
                                 spi -> {
                                     world.addEntity(spi.createBullet(player, gameData));
                                 }
-                        );
+                            );
+                        }
                     }
 
                     if (player.getX() < 0) {
