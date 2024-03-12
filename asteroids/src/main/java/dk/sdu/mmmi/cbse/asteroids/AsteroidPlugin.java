@@ -14,8 +14,9 @@ public class AsteroidPlugin implements IGamePluginService {
     public void start(GameData gameData, World world) {
         int destroyedAsteroids = gameData.getDestroydAsteroids();
         int diffculty = 2;
-        if(destroyedAsteroids >= 10) diffculty = gameData.getDestroydAsteroids()/10;
-        if(diffculty > 100) diffculty = 100;
+        if(destroyedAsteroids >= 100) diffculty = diffculty + gameData.getDestroydAsteroids()/100;
+        if(diffculty > (gameData.getDisplayHeight()/5)) diffculty = (gameData.getDisplayHeight()/5);
+        if(diffculty < 2) diffculty = 2;
         for(int i = 0; i < diffculty; i++) {
             Entity asteroid = createAsteroid(null, gameData);
             //gameData.setLog(gameData.getLog()+"\nAsteroid"+i+" Created");
@@ -50,7 +51,7 @@ public class AsteroidPlugin implements IGamePluginService {
                 //gameData.setLog(gameData.getLog()+"\nAsteroid"+e.getID()+" shaped");
             }
             Astroid = setSpawn(Astroid, e, gameData, isNew);
-            Astroid.setPaint(Color.DARKORANGE);
+            Astroid.setPaint(Color.GREY);
             Astroid.setHealth(Astroid.getSize());
             Astroid.setDamage(Astroid.getSize() / 5);
             Astroid.setCurrenthealth(Astroid.getHealth());

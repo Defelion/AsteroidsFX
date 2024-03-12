@@ -27,12 +27,12 @@ public class PlayerPlugin implements IGamePluginService {
         Entity playerShip = new Player();
         //playerShip.setPolygonCoordinates(-5,-5,10,0,-5,5);
         playerShip.setPolygonCoordinates(
-                8,-12,
-                24,0,
-                8,12,
-                -12,12,
-                0,0,
-                -12,-12);
+                -4,-12,
+                12,0,
+                -4,12,
+                -24,12,
+                -12,0,
+                -24,-12);
         playerShip.setSize(6);
         playerShip.setDamage(2);
         playerShip.setX(gameData.getDisplayHeight()/2);
@@ -42,9 +42,9 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.setMaxShotTimer(20);
         playerShip.setHealth(100);
         playerShip.setCurrenthealth(playerShip.getHealth());
-        Paint paint = Color.LIGHTBLUE;
+        Paint paint = Color.BLUE;
         playerShip.setPaint(paint);
-        playerShip.setRotationSpeed(5);
+        playerShip.setRotationSpeed(2);
         return playerShip;
     }
 
