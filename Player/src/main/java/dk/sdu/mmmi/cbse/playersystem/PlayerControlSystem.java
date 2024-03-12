@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import javafx.scene.layout.Pane;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -22,6 +23,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
             for (Entity player : world.getEntities(Player.class)) {
                 if (player.getHealth() <= 0) {
                     player.setDead(true);
+                    Pane menu = gameData.getMenu();
+                    menu.setVisible(true);
+                    menu.setDisable(false);
+                    gameData.setMenu(menu);
                     break;
                 } else {
                     if (gameData.getKeys().isDown(GameKeys.LEFT)) {

@@ -7,12 +7,8 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
@@ -53,11 +49,19 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        Paint bgColor = Color.BLACK;
-        BackgroundFill bgFill = new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY);
+        BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
         Background bg = new Background(bgFill);
         gameWindow.setBackground(bg);
         gameWindow.autosize();
+        Pane menu = gameData.getMenu();
+        menu.setId("Menu");
+        menu.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        menu.setTranslateX((gameWindow.getWidth()/2));
+        menu.setTranslateY((gameWindow.getHeight()/2));
+        menu.setVisible(true);
+        menu.setDisable(false);
+        gameData.setMenu(menu);
+        gameWindow.getChildren().add(menu);
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.LEFT)) {
@@ -175,11 +179,15 @@ public class Main extends Application {
         text.setId("text");
         int count = 0;
         for(Node node : gameWindow.getChildren()) {
-            if(node.getId() == "text") {
+            if(Objects.equals(node.getId(), "text")) {
                 gameWindow.getChildren().remove(node);
                 gameWindow.getChildren().add(text);
                 count++;
                 break;
+            }
+            if(Objects.equals(node.getId(), "menu")) {
+                gameWindow.getChildren().remove(node);
+                gameWindow.getChildren().add(gameData.getMenu());
             }
         }
         if(count == 0) gameWindow.getChildren().add(text);

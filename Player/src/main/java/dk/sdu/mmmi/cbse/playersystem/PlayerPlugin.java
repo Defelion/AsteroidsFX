@@ -4,6 +4,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -19,6 +20,10 @@ public class PlayerPlugin implements IGamePluginService {
 
         // Add entities to the world
         player = createPlayerShip(gameData);
+        Pane menu = gameData.getMenu();
+        menu.setVisible(false);
+        menu.setDisable(true);
+        gameData.setMenu(menu);
         //gameData.setLog(gameData.getLog()+"\nPlayer Created");
         world.addEntity(player);
     }
