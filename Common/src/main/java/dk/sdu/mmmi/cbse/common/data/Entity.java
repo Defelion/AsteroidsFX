@@ -26,6 +26,7 @@ public class Entity implements Serializable {
     private double damage;
     private Boolean dead = false;
     private Boolean immortal = true;
+    private String type;
 
     public Boolean getImmortal() { return immortal; }
 
@@ -116,4 +117,8 @@ public class Entity implements Serializable {
     public Paint getPaint() { return paint; }
 
     public void setPaint(Paint paint) { this.paint = paint; }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 }

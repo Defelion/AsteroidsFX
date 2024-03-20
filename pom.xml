@@ -20,6 +20,7 @@
         <module>CommonAsteroids</module>
         <module>enemies</module>
         <module>DamageCounter</module>
+        <module>Menu</module>
     </modules>
     <properties>
         <java>java</java>

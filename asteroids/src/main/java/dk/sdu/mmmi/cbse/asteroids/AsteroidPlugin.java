@@ -52,8 +52,8 @@ public class AsteroidPlugin implements IGamePluginService {
             }
             Astroid = setSpawn(Astroid, e, gameData, isNew);
             Astroid.setPaint(Color.GREY);
-            Astroid.setHealth(Astroid.getSize());
-            Astroid.setDamage(Astroid.getSize() / 5);
+            Astroid.setHealth(Astroid.getSize()*2);
+            Astroid.setDamage(Astroid.getSize());
             Astroid.setCurrenthealth(Astroid.getHealth());
             Random speed = new Random();
             Astroid.setSpeed(speed.nextDouble(1, 2));
@@ -99,8 +99,8 @@ public class AsteroidPlugin implements IGamePluginService {
 
         }
         else {
-            Astroid.setX(point.nextDouble((e.getX()-(e.getSize()/2)),(e.getX()+(e.getSize()/2))));
-            Astroid.setY(point.nextDouble((e.getY()-(e.getSize()/2)),(e.getY()+(e.getSize()/2))));
+            Astroid.setX(point.nextDouble((e.getX()-(e.getSize())),(e.getX()+(e.getSize()))));
+            Astroid.setY(point.nextDouble((e.getY()-(e.getSize())),(e.getY()+(e.getSize()))));
             double vectorAngle = ((Astroid.getY() - e.getY())/(Astroid.getX() - e.getX()));
             Astroid.setRotation(Math.toDegrees(vectorAngle));
             Astroid.setSpeed((e.getSpeed()*2));

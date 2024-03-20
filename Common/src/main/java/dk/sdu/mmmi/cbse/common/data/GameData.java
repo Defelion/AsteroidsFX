@@ -11,7 +11,7 @@ public class GameData {
     private int destroyedEnemies = 0;
     private double score = 0;
     private  String log = "";
-    private int immortalTime = 50;
+    private int immortalTime = 100;
     private Pane Menu = new Pane();
 
     public Pane getMenu() {

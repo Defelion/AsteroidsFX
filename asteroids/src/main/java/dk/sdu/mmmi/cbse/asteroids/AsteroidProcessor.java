@@ -21,14 +21,6 @@ public class AsteroidProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         for(Entity asteroid : world.getEntities(Asteroids.class)) {
             if(asteroid.getHealth() <= 0) {
-                AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
-                if(asteroid.getHealth() <= 0){
-                    for(int i = 0; i < 4; i++) {
-                        Entity newAst = asteroidPlugin.createAsteroid(asteroid,gameData);
-                        if(newAst != null) world.addEntity(newAst);
-                    }
-                }
-
                 gameData.setDestroydAsteroids(gameData.getDestroydAsteroids() + 1);
                 if(world.getEntities(Player.class).size() > 0)
                     gameData.setScore(gameData.getScore() + asteroid.getSize());

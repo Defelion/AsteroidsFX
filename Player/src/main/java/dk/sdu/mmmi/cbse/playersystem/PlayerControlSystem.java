@@ -27,8 +27,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     menu.setVisible(true);
                     menu.setDisable(false);
                     gameData.setMenu(menu);
+                    /*gameData.getMenu().setVisible(false);
+                    gameData.getMenu().setDisable(true);*/
                     break;
-                } else {
+                } else if (gameData.getMenu().isDisabled()){
                     if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                         player.setRotation(player.getRotation() - player.getRotationSpeed());
                     }
@@ -42,12 +44,15 @@ public class PlayerControlSystem implements IEntityProcessingService {
                         player.setY(player.getY() + changeY * player.getSpeed());
                     }
                     if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                        if(player.getShotTimer() == (player.getMaxShotTimer()/2) || player.getShotTimer() >= player.getMaxShotTimer()) {
+                        if(player.getShotTimer() >= player.getMaxShotTimer()) {
+                            gameData.setLog("");
+                            gameData.setLog(gameData.getLog()+"\nPlayer: "+gameData.getDisplayWidth());
                             getBulletSPIs().stream().findFirst().ifPresent(
                                 spi -> {
                                     world.addEntity(spi.createBullet(player, gameData));
                                 }
                             );
+                            player.setShotTimer(0);
                         }
                     }
 
@@ -65,7 +70,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     }
                 }
                 if (player.getHealth() <= 0) player.setDead(true);
-                if(player.getShotTimer() == gameData.getImmortalTime()) player.setImmortal(false);
+                if(player.getShotTimer() == gameData.getImmortalTime()) {
+                    player.setImmortal(false);
+                }
                 else player.setShotTimer(player.getShotTimer()+1);
             }
         }

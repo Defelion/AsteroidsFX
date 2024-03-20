@@ -173,6 +173,8 @@ public class Main extends Application {
                         +"\namount of elements: "+gameWindow.getChildren().size()
         );
         gameData.setDisplayWidth((int) gameWindow.getWidth());
+        /*gameData.setLog("");
+        gameData.setLog(gameData.getLog()+"\nData: "+gameData.getDisplayWidth()+", Window: "+gameWindow.getWidth());*/
         gameData.setDisplayHeight((int) gameWindow.getHeight());
         text.setFill(Color.WHITE);
         if(gameData.getLog() != "") text.setText(text.getText()+"\nLog:"+gameData.getLog());

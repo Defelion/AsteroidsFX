@@ -60,6 +60,8 @@ public class EnemiesControlSystem implements IEntityProcessingService {
                 Entity Player = null;
                 if(world.getEntities(Player.class).size() > 0) Player = world.getEntities(dk.sdu.mmmi.cbse.playersystem.Player.class).getFirst();
                 if(shotTimer >= maxShotTimer) {
+                    /*gameData.setLog("");
+                    gameData.setLog(gameData.getLog()+"\nPlayer: "+gameData.getDisplayWidth());*/
                     getBulletSPIs().stream().findFirst().ifPresent(
                             spi -> {world.addEntity(spi.createBullet(enemy,gameData));}
                     );

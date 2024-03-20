@@ -18,18 +18,30 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
+            if(bullet.getHealth() <= 0) {
+                bullet.setDead(true);
+                continue;
+            }
+            bullet.setImmortal(false);
             double rot = Math.toRadians(bullet.getRotation());
             bullet.setX(bullet.getX() + Math.cos(rot) * bullet.getSpeed());
             bullet.setY(bullet.getY() + Math.sin(rot) * bullet.getSpeed());
-            if (
-                    bullet.getX() <= 0 ||
-                    bullet.getX() >= gameData.getDisplayHeight() ||
-                    bullet.getY() <= 0 ||
-                    bullet.getY() >= gameData.getDisplayWidth())
-            {
+
+            if ( bullet.getX() < 0 ){
+                bullet.setHealth(0);
+            }else if ( bullet.getX() > gameData.getDisplayHeight() ) {
                 bullet.setHealth(0);
             }
-            if(bullet.getHealth() <= 0) bullet.setDead(true);
+
+            if ( bullet.getY() < 0 ) {
+                bullet.setHealth(0);
+            } else if ( bullet.getY() > gameData.getDisplayWidth() )
+            {
+                /*gameData.setLog("");
+                gameData.setLog(gameData.getLog()+"\ngameData: "+gameData.getDisplayWidth());
+                gameData.setLog(gameData.getLog()+"\nBullet: "+bullet.getX());*/
+                bullet.setHealth(0);
+            }
         }
     }
 

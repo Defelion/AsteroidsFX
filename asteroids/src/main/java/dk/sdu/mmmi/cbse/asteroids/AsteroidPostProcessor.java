@@ -19,11 +19,15 @@ public class AsteroidPostProcessor implements IPostEntityProcessingService{
             asteroidPlugin.start(gameData,world);
         }
         else {
-            /*for(Entity Asteroid : world.getEntities(Asteroids.class)) {
+            for(Entity Asteroid : world.getEntities(Asteroids.class)) {
+                AsteroidPlugin asteroidPlugin = new AsteroidPlugin();
                 if(Asteroid.getHealth() <= 0){
-                    asteroidPlugin.start(gameData, world, Asteroid);
+                    for(int i = 0; i < (Asteroid.getSize()/10); i++) {
+                        Entity newAst = asteroidPlugin.createAsteroid(Asteroid,gameData);
+                        if(newAst != null) world.addEntity(newAst);
+                    }
                 }
-            }*/
+            }
         }
     }
 }
