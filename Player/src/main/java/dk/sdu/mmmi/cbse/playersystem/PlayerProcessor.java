@@ -26,7 +26,7 @@ public class PlayerProcessor implements IPostEntityProcessingService {
             playerPlugin.start(gameData, world);
             //world.addEntity(createPlayerShip(gameData));
         }
-        if (!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.UP)) {
+        if (!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.E)) {
             PlayerPlugin playerPlugin = new PlayerPlugin();
             playerPlugin.start(gameData, world);
             Pane menu = gameData.getMenu();

@@ -48,6 +48,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
+        gameData.setDisplayHeight(800);
+        gameData.setDisplayWidth(800);
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
         Background bg = new Background(bgFill);
@@ -73,8 +75,8 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
-            if (event.getCode().equals(KeyCode.DOWN)) {
-                gameData.getKeys().setKey(GameKeys.DOWN, true);
+            if (event.getCode().equals(KeyCode.E)) {
+                gameData.getKeys().setKey(GameKeys.E, true);
             }
             if (event.getCode().equals(KeyCode.A)) {
                 gameData.getKeys().setKey(GameKeys.LEFT, true);
@@ -85,8 +87,8 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.W)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
-            if (event.getCode().equals(KeyCode.S)) {
-                gameData.getKeys().setKey(GameKeys.DOWN, true);
+            if (event.getCode().equals(KeyCode.Q)) {
+                gameData.getKeys().setKey(GameKeys.Q, true);
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
                 gameData.getKeys().setKey(GameKeys.SPACE, true);
@@ -102,11 +104,11 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, false);
             }
-            if (event.getCode().equals(KeyCode.DOWN)) {
-                gameData.getKeys().setKey(GameKeys.DOWN, false);
+            if (event.getCode().equals(KeyCode.E)) {
+                gameData.getKeys().setKey(GameKeys.E, false);
             }
-            if (event.getCode().equals(KeyCode.S)) {
-                gameData.getKeys().setKey(GameKeys.DOWN, false);
+            if (event.getCode().equals(KeyCode.Q)) {
+                gameData.getKeys().setKey(GameKeys.Q, false);
             }
             if (event.getCode().equals(KeyCode.A)) {
                 gameData.getKeys().setKey(GameKeys.LEFT, false);

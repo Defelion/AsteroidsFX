@@ -67,7 +67,6 @@ public class AsteroidPlugin implements IGamePluginService {
         Random xpoint = new Random();
         Random ypoint = new Random();
         Random point = new Random();
-        boolean notSamePoint = true;
         if(isNew) {
                 switch (side.nextInt(1,4)){
                     case 1:

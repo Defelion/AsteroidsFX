@@ -45,8 +45,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     }
                     if (gameData.getKeys().isDown(GameKeys.SPACE)) {
                         if(player.getShotTimer() >= player.getMaxShotTimer()) {
-                            gameData.setLog("");
-                            gameData.setLog(gameData.getLog()+"\nPlayer: "+gameData.getDisplayWidth());
+                            /*gameData.setLog("");
+                            gameData.setLog(gameData.getLog()+"\nPlayer: "+gameData.getDisplayWidth());*/
                             getBulletSPIs().stream().findFirst().ifPresent(
                                 spi -> {
                                     world.addEntity(spi.createBullet(player, gameData));

@@ -4,8 +4,8 @@ import javafx.scene.layout.Pane;
 
 public class GameData {
 
-    private int displayWidth  = 800 ;
-    private int displayHeight = 800;
+    private int displayWidth;
+    private int displayHeight;
     private final GameKeys keys = new GameKeys();
     private int destroydAsteroids = 0;
     private int destroyedEnemies = 0;

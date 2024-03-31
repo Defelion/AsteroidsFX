@@ -24,12 +24,14 @@ public class MenuControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         if(!gameData.getMenu().isDisabled()) {
-            if(!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.DOWN)) {
+            if(!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.Q)) {
                 Platform.exit();
             }
+            Pane menu = gameData.getMenu();
+            
             Button Start = new Button();
             Start.setId("StartBTN");
-            Start.setText("Start (W)");
+            Start.setText("Start (E)");
             EventHandler<MouseEvent> startEvent = new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -46,7 +48,7 @@ public class MenuControlSystem implements IEntityProcessingService {
             //Start.setOnAction(startEvent);
             Start.setOnMouseClicked(startEvent);
             Button Exit = new Button();
-            Exit.setText("Exit (S)");
+            Exit.setText("Exit (Q)");
             Exit.setId("ExitBTN");
             EventHandler<MouseEvent> exitEvent = new EventHandler<MouseEvent>() {
                 @Override
@@ -55,7 +57,6 @@ public class MenuControlSystem implements IEntityProcessingService {
                 }
             };
             Exit.setOnMouseClicked(exitEvent);
-            Pane menu = gameData.getMenu();
             menu.setPrefSize(90,70);
             menu.setBackground(Background.fill(Color.LIGHTGRAY));
             Exit.setTranslateX(5);

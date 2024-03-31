@@ -46,6 +46,7 @@ public class EnemiesPlugin implements IGamePluginService {
         Enemy.setDamage((1+Difficulty)-(gameData.getScore()/1000));
         Enemy.setSpeed((1+(Difficulty/20)));
         Enemy.setCurrenthealth(Enemy.getHealth());
+        Enemy.setType("Enemy");
         double shot = ((Enemy.getSize()*(10+gameData.getScore()/1000))-(Difficulty/5));
         if(shot < 20) shot = 20;
         //gameData.setLog(gameData.getLog()+"\nShot: "+shot);
