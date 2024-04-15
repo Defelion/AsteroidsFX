@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
+ * the java class there is used to save entity into a map
  * @author jcs
  */
 public class World {

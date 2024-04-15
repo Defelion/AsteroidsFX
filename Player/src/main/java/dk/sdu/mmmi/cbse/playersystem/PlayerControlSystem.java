@@ -27,8 +27,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     menu.setVisible(true);
                     menu.setDisable(false);
                     gameData.setMenu(menu);
-                    /*gameData.getMenu().setVisible(false);
-                    gameData.getMenu().setDisable(true);*/
                     break;
                 } else if (gameData.getMenu().isDisabled()){
                     if (gameData.getKeys().isDown(GameKeys.LEFT)) {
@@ -44,9 +42,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
                         player.setY(player.getY() + changeY * player.getSpeed());
                     }
                     if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+                        player.setDamage(player.getDamage()*((gameData.getScore()/1000)+1));
                         if(player.getShotTimer() >= player.getMaxShotTimer()) {
-                            /*gameData.setLog("");
-                            gameData.setLog(gameData.getLog()+"\nPlayer: "+gameData.getDisplayWidth());*/
                             getBulletSPIs().stream().findFirst().ifPresent(
                                 spi -> {
                                     world.addEntity(spi.createBullet(player, gameData));

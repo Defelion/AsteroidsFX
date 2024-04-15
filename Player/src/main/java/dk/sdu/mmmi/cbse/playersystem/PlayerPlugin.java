@@ -40,10 +40,10 @@ public class PlayerPlugin implements IGamePluginService {
                 -12,0,
                 -24,-12);
         playerShip.setSize(12);
-        playerShip.setDamage(3);
+        playerShip.setDamage(5);
         playerShip.setX(gameData.getDisplayHeight()/2);
         playerShip.setY(gameData.getDisplayWidth()/2);
-        playerShip.setSpeed(1);
+        playerShip.setSpeed(2);
         playerShip.setShotTimer(0);
         playerShip.setMaxShotTimer(20);
         playerShip.setHealth(100);

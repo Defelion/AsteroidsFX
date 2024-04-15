@@ -15,17 +15,14 @@ public class damageControlSystem implements IPostEntityProcessingService {
         for(Entity entity1 : world.getEntities()) {
             for(Entity entity2 : world.getEntities()) {
                 if(entity1 == entity2 ||
-                    entity1.getPaint() == entity2.getPaint() ||
-                    entity1.getImmortal() ||
-                    entity2.getImmortal())
+                    entity1.getPaint() == entity2.getPaint())
                     continue;
+                //collision return true if there is a collision
                 if(collision(entity1,entity2,gameData)) {
                     entity1.setHealth((entity1.getHealth()-entity2.getDamage()));
                     entity2.setHealth((entity2.getHealth()-entity1.getDamage()));
                     if(entity1.getHealth()<=0)entity1.setDamage(0);
                     if(entity2.getHealth()<=0)entity2.setDamage(0);
-                    /*entity1.setImmortal(true);
-                    entity2.setImmortal(true);*/
                 }
             }
         }
@@ -39,9 +36,7 @@ public class damageControlSystem implements IPostEntityProcessingService {
                     (e1.getY() - e2.getY()) * (e1.getY() - e2.getY())
             )
         );
-        if(distance <= e1.getSize() || distance <= e2.getSize()){
-            touching = true;
-        }
+        if(distance <= e1.getSize() || distance <= e2.getSize()) touching = true;
         return touching;
     }
 }

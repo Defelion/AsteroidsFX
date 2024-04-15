@@ -21,6 +21,7 @@
         <module>enemies</module>
         <module>DamageCounter</module>
         <module>Menu</module>
+        <module>Collisions</module>
     </modules>
     <properties>
         <java>java</java>
@@ -113,6 +114,9 @@
                                 </fileset>
                                 <fileset>
                                     <directory>libs</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>plugin</directory>
                                 </fileset>
                             </filesets>
                         </configuration>

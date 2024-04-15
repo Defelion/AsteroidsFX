@@ -41,7 +41,7 @@ public class EnemiesPlugin implements IGamePluginService {
         else Enemy.setPaint(Color.GREEN);
         Enemy.setSize(size.nextInt(5,25));
         Enemy.setPolyCoordinatesArray(createShape(Enemy.getSize()));
-        Enemy.setHealth((Enemy.getHealth()+Difficulty));
+        Enemy.setHealth((Enemy.getSize()/4)+Difficulty);
         Enemy.setRotationSpeed(1+(Difficulty/50));
         Enemy.setDamage((1+Difficulty)-(gameData.getScore()/1000));
         Enemy.setSpeed((1+(Difficulty/20)));

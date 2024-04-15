@@ -15,6 +15,7 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 
+
 public class AsteroidProcessor implements IEntityProcessingService {
     //AsteroidPlugin AP = new AsteroidPlugin();
     @Override

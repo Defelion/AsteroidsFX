@@ -40,19 +40,16 @@ public class AsteroidPlugin implements IGamePluginService {
         if(size > 5 || e == null) {
             Astroid = new Asteroids();
             Boolean isNew = Boolean.TRUE;
+            Random randSize = new Random();
             if (e != null) {
                 isNew = Boolean.FALSE;
-                Astroid.setPolyCoordinatesArray(createShape(size));
-                //gameData.setLog(gameData.getLog() + "\nSplit Asteroid" + e.getID() + " shaped");
-            } else {
-                Random randSize = new Random();
-                Astroid.setSize(randSize.nextInt(10, 50));
-                Astroid.setPolyCoordinatesArray(createShape(Astroid.getSize()));
-                //gameData.setLog(gameData.getLog()+"\nAsteroid"+e.getID()+" shaped");
+                Astroid.setSize(randSize.nextInt(5,(int)size));
             }
+            else Astroid.setSize(randSize.nextInt(10, 50));
+            Astroid.setPolyCoordinatesArray(createShape(Astroid.getSize()));
             Astroid = setSpawn(Astroid, e, gameData, isNew);
             Astroid.setPaint(Color.GREY);
-            Astroid.setHealth(Astroid.getSize()*2);
+            Astroid.setHealth(Astroid.getSize());
             Astroid.setDamage(Astroid.getSize());
             Astroid.setCurrenthealth(Astroid.getHealth());
             Random speed = new Random();

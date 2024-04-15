@@ -43,6 +43,7 @@ public class Main extends Application {
     
 
     public static void main(String[] args) {
+
         launch(Main.class);
     }
 
@@ -58,8 +59,8 @@ public class Main extends Application {
         Pane menu = gameData.getMenu();
         menu.setId("Menu");
         menu.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        menu.setTranslateX((gameWindow.getWidth()/2));
-        menu.setTranslateY((gameWindow.getHeight()/2));
+        menu.setTranslateX(0);
+        menu.setTranslateY(gameWindow.getHeight());
         menu.setVisible(true);
         menu.setDisable(false);
         gameData.setMenu(menu);
