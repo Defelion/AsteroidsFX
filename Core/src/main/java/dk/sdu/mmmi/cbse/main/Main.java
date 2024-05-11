@@ -13,26 +13,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
-import javafx.css.StyleableProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class Main extends Application {
 
@@ -170,7 +159,7 @@ public class Main extends Application {
 
     private void draw() {
         Text text = new Text(10, 20,
-                "Destroyed asteroids: "+gameData.getDestroydAsteroids()+
+                "Destroyed asteroids: "+gameData.getDestroyedAsteroids()+
                         "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
                         "\nScore: "+gameData.getScore()
                         +"\namount of elements: "+gameWindow.getChildren().size()

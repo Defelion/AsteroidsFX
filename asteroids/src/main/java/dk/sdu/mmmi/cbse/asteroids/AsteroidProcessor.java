@@ -5,9 +5,7 @@ import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.asteroids.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.playersystem.Player;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -22,8 +20,8 @@ public class AsteroidProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         for(Entity asteroid : world.getEntities(Asteroids.class)) {
             if(asteroid.getHealth() <= 0) {
-                gameData.setDestroydAsteroids(gameData.getDestroydAsteroids() + 1);
-                if(world.getEntities(Player.class).size() > 0)
+                gameData.setDestroyedAsteroids(gameData.getDestroyedAsteroids() + 1);
+                if(!gameData.isGameOver())
                     gameData.setScore(gameData.getScore() + asteroid.getSize());
                 asteroid.setDead(true);
                 continue;

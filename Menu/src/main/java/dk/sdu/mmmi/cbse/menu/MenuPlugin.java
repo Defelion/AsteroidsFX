@@ -29,7 +29,7 @@ public class MenuPlugin implements IGamePluginService {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 gameData.setDestroyedEnemies(0);
-                gameData.setDestroydAsteroids(0);
+                gameData.setDestroyedAsteroids(0);
                 for (Entity entity : world.getEntities()) {
                     entity.setDead(true);
                 }

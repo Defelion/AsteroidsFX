@@ -7,12 +7,13 @@ public class GameData {
     private int displayWidth;
     private int displayHeight;
     private final GameKeys keys = new GameKeys();
-    private int destroydAsteroids = 0;
+    private int destroyedAsteroids = 0;
     private int destroyedEnemies = 0;
     private double score = 0;
     private  String log = "";
     private int immortalTime = 100;
     private Pane Menu = new Pane();
+    private boolean GameOver = false;
 
     public Pane getMenu() {
         return Menu;
@@ -44,9 +45,9 @@ public class GameData {
         return displayHeight;
     }
 
-    public int getDestroydAsteroids() { return destroydAsteroids; }
+    public int getDestroyedAsteroids() { return destroyedAsteroids; }
 
-    public void setDestroydAsteroids(int destroydAsteroids) { this.destroydAsteroids = destroydAsteroids; }
+    public void setDestroyedAsteroids(int destroyedAsteroids) { this.destroyedAsteroids = destroyedAsteroids; }
 
     public int getDestroyedEnemies() { return destroyedEnemies; }
 
@@ -59,4 +60,12 @@ public class GameData {
     public String getLog() { return log; }
 
     public void setLog(String log) { this.log = log; }
+
+    public boolean isGameOver() {
+        return GameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.GameOver = gameOver;
+    }
 }

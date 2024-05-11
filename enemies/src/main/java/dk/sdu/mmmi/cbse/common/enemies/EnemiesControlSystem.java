@@ -25,7 +25,7 @@ public class EnemiesControlSystem implements IEntityProcessingService {
         for (Entity enemy : world.getEntities(Enemy.class)) {
             if(enemy.getHealth() <= 0) {
                 gameData.setDestroyedEnemies(gameData.getDestroyedEnemies() + 1);
-                if(world.getEntities(Player.class).size() > 0)
+                if(!gameData.isGameOver())
                     gameData.setScore(gameData.getScore() + enemy.getSize());
                 enemy.setDead(true);
                 break;
@@ -115,11 +115,17 @@ public class EnemiesControlSystem implements IEntityProcessingService {
     private boolean targetPlayer (Entity enemy, Entity player) {
         boolean playerTarget = false;
         if(player != null) {
-            Point2D enemyPoint = new Point2D(enemy.getX(), enemy.getY());
-            Point2D playerPoint = new Point2D(player.getX(), player.getY());
-            double distance = enemyPoint.distance(playerPoint);
 
-            if (distance <= (enemy.getSize() * 4)) {
+            /*Point2D enemyPoint = new Point2D(enemy.getX(), enemy.getY());
+            Point2D playerPoint = new Point2D(player.getX(), player.getY());
+            double distance = enemyPoint.distance(playerPoint);*/
+            double distance = (
+                    Math.sqrt(
+                            (enemy.getX() - player.getX()) * (enemy.getX() - player.getX()) +
+                                    (enemy.getY() - player.getY()) * (enemy.getY() - player.getY())
+                    )
+            );
+            if (distance <= (enemy.getSize() * 10)) {
                 playerTarget = true;
             }
         }

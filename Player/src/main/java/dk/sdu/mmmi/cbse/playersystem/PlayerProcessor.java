@@ -18,7 +18,7 @@ public class PlayerProcessor implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         if(gameData.getMenu().isDisabled() && world.getEntities(Player.class).size() <= 0) {
             gameData.setDestroyedEnemies(0);
-            gameData.setDestroydAsteroids(0);
+            gameData.setDestroyedAsteroids(0);
             for (Entity entity : world.getEntities()) {
                 entity.setDead(true);
             }
