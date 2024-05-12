@@ -9,38 +9,23 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 import java.io.IOException;
-import java.lang.module.Configuration;
 import java.lang.module.ModuleFinder;
 import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
-import javafx.css.StyleableProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class Main extends Application {
 
@@ -62,18 +47,18 @@ public class Main extends Application {
     public static void main(String[] args) {
         layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "DamageCounter");
         layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "Collisions");
-        while(layer.modules().iterator().hasNext()){
+        /*while(layer.modules().iterator().hasNext()){
             System.out.println(layer.modules().iterator().next());
-        }
+        }*/
+
         var services = ServiceLoader.load(layer, IPostEntityProcessingService.class);
         services.stream()
                 .map(ServiceLoader.Provider::get)
-                .forEach(SplitPackage ->
-                        System.out.println(SplitPackage.toString())
+                .forEach(PostEntityProcessingService ->
+                        System.out.println(PostEntityProcessingService.toString())
                 );
         services.stream().close();
-
-        //launch(Main.class);
+        launch(Main.class);
     }
 
     @Override
