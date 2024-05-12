@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
+/**
+ * The type Asteroid plugin.
+ */
 public class AsteroidPlugin implements IGamePluginService {
 
     @Override
@@ -34,6 +37,13 @@ public class AsteroidPlugin implements IGamePluginService {
         }
     }
 
+    /**
+     * Create asteroid entity.
+     *
+     * @param e        the e
+     * @param gameData the game data
+     * @return the entity
+     */
     public Entity createAsteroid(Entity e, GameData gameData) {
         double size = 0;
         if (e != null) size = (e.getSize()/2);

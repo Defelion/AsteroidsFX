@@ -9,6 +9,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+/**
+ * The type Player processor.
+ */
 public class PlayerProcessor implements IPostEntityProcessingService {
     /**
      * @param gameData

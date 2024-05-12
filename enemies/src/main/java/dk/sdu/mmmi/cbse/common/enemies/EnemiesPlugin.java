@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
+/**
+ * The type Enemies plugin.
+ */
 public class EnemiesPlugin implements IGamePluginService {
 
     @Override

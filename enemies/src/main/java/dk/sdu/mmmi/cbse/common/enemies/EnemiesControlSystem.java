@@ -13,6 +13,9 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * The type Enemies control system.
+ */
 public class EnemiesControlSystem implements IEntityProcessingService {
     /**
      * @param gameData

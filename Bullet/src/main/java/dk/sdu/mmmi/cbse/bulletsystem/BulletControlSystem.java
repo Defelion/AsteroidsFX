@@ -7,6 +7,9 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
+/**
+ * The type Bullet control system.
+ */
 public class BulletControlSystem implements IEntityProcessingService, BulletSPI {
 
     @Override

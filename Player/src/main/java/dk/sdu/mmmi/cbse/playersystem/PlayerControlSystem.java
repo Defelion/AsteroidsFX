@@ -25,6 +25,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     Pane menu = gameData.getMenu();
                     menu.setVisible(true);
                     menu.setDisable(false);
+                    menu.toFront();
+                    menu.setTranslateX((gameData.getDisplayWidth()/2)-(menu.getPrefWidth()/2));
+                    menu.setTranslateY((gameData.getDisplayHeight()/2)-(menu.getPrefWidth()/2));
                     gameData.setGameOver(true);
                     gameData.setMenu(menu);
                     break;

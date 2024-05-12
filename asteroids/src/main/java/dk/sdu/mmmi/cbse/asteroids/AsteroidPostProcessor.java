@@ -6,6 +6,9 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
+/**
+ * The type Asteroid post processor.
+ */
 public class AsteroidPostProcessor implements IPostEntityProcessingService{
     /**
      * @param gameData

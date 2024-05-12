@@ -31,6 +31,7 @@ public class PlayerPlugin implements IGamePluginService {
 
     private Entity createPlayerShip(GameData gameData) {
         Entity playerShip = new Player();
+        gameData.setGameOver(false);
         //playerShip.setPolygonCoordinates(-5,-5,10,0,-5,5);
         playerShip.setPolygonCoordinates(
                 -4,-12,
@@ -45,7 +46,7 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.setY(gameData.getDisplayWidth()/2);
         playerShip.setSpeed(2);
         playerShip.setShotTimer(0);
-        playerShip.setMaxShotTimer(20);
+        playerShip.setMaxShotTimer(10);
         playerShip.setHealth(100);
         playerShip.setType("Player");
         playerShip.setCurrenthealth(playerShip.getHealth());

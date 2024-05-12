@@ -30,14 +30,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * The type Main.
+ */
 public class Main extends Application {
 
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    
 
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         launch(Main.class);
@@ -59,6 +67,7 @@ public class Main extends Application {
         menu.setTranslateY(gameWindow.getHeight());
         menu.setVisible(true);
         menu.setDisable(false);
+        menu.autosize();
         gameData.setMenu(menu);
         gameWindow.getChildren().add(menu);
         Scene scene = new Scene(gameWindow);
@@ -179,6 +188,7 @@ public class Main extends Application {
         if(gameData.getLog() != "") text.setText(text.getText()+"\nLog:"+gameData.getLog());
         text.setId("text");
         int count = 0;
+
         for(Node node : gameWindow.getChildren()) {
             if(Objects.equals(node.getId(), "text")) {
                 gameWindow.getChildren().remove(node);

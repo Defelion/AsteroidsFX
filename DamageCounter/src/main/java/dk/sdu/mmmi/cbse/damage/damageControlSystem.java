@@ -5,6 +5,9 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
+/**
+ * The type Damage control system.
+ */
 public class damageControlSystem implements IPostEntityProcessingService {
     /**
      * @param gameData
@@ -28,6 +31,14 @@ public class damageControlSystem implements IPostEntityProcessingService {
         }
     }
 
+    /**
+     * Collision boolean.
+     *
+     * @param e1       the e 1
+     * @param e2       the e 2
+     * @param gameData the game data
+     * @return the boolean
+     */
     public boolean collision (Entity e1, Entity e2, GameData gameData) {
         boolean touching = false;
         double distance = (

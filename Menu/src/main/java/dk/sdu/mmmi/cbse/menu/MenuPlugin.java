@@ -11,6 +11,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * The type Menu plugin.
+ */
 public class MenuPlugin implements IGamePluginService {
     /**
      * @param gameData
