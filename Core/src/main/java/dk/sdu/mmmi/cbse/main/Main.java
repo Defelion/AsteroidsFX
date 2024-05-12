@@ -8,8 +8,16 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
+import java.io.IOException;
+import java.lang.module.Configuration;
+import java.lang.module.ModuleFinder;
+import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -40,11 +48,32 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    
+
+
+    private static ModuleLayer layer;
+
+    private static ModuleLayer createLayer(String from, String module) {
+        var finder = ModuleFinder.of(Paths.get(from));
+        var parent = ModuleLayer.boot();
+        var cf = parent.configuration().resolve(finder, ModuleFinder.of(), Set.of(module));
+        return parent.defineModulesWithOneLoader(cf, ClassLoader.getSystemClassLoader());
+    }
 
     public static void main(String[] args) {
+        layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "DamageCounter");
+        layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "Collisions");
+        while(layer.modules().iterator().hasNext()){
+            System.out.println(layer.modules().iterator().next());
+        }
+        var services = ServiceLoader.load(layer, IPostEntityProcessingService.class);
+        services.stream()
+                .map(ServiceLoader.Provider::get)
+                .forEach(SplitPackage ->
+                        System.out.println(SplitPackage.toString())
+                );
+        services.stream().close();
 
-        launch(Main.class);
+        //launch(Main.class);
     }
 
     @Override
@@ -221,11 +250,35 @@ public class Main extends Application {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
+    /*private Collection<? extends IGamePluginService> getPluginServices() {
+        // Load services from the default classpath
+        Collection<? extends IGamePluginService> defaultServices = ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+
+        // Load services from the module layer (assuming Java 9+)
+        Collection<? extends IGamePluginService> moduleServices = ModuleLayer.boot().findServices(IGamePluginService.class).stream().toList();
+
+        // Combine services from both sources (consider using Sets for better handling of duplicates)
+        List<IGamePluginService> combinedServices = new ArrayList<>(defaultServices);
+        combinedServices.addAll(moduleServices);
+        return combinedServices;
+    }*/
+
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private static String moduleNameFromJar(Path path) {
+        try (FileSystem jarFile = FileSystems.newFileSystem(path, (ClassLoader)null)) {
+            String jarfileName = path.getFileName().toString().substring(0, path.getFileName().toString().indexOf("-"));
+            //System.out.println(jarfileName);
+            return jarfileName;
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 }
