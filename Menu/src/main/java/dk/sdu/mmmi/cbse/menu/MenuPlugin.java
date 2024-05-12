@@ -18,6 +18,7 @@ public class MenuPlugin implements IGamePluginService {
      */
     @Override
     public void start(GameData gameData, World world) {
+        gameData.setGameOver(true);
         Pane menu = gameData.getMenu();
         menu.setTranslateY(gameData.getDisplayHeight()/2);
         menu.setTranslateX(gameData.getDisplayWidth()/2);
@@ -28,6 +29,7 @@ public class MenuPlugin implements IGamePluginService {
         EventHandler<MouseEvent> startEvent = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                gameData.setGameOver(false);
                 gameData.setDestroyedEnemies(0);
                 gameData.setDestroyedAsteroids(0);
                 for (Entity entity : world.getEntities()) {

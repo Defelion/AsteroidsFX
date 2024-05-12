@@ -20,5 +20,15 @@
             <artifactId>CommonBullet</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.gwtproject</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.7</version>
+        </dependency>
     </dependencies>
 </project>

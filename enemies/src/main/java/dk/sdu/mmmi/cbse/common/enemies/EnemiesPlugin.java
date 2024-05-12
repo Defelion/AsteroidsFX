@@ -13,7 +13,7 @@ public class EnemiesPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         int destroyedEnemies = gameData.getDestroyedEnemies();
-        int diffculty = 2;
+        int diffculty = 4;
         if(destroyedEnemies >= 10) diffculty += gameData.getDestroyedEnemies()/10;
         if(diffculty > (gameData.getDisplayHeight()/5)) diffculty = (gameData.getDisplayHeight()/5);
         for(int i = 0; i < diffculty; i++) {
