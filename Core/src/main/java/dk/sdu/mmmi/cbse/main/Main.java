@@ -7,25 +7,31 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-
-import java.io.IOException;
-import java.lang.module.ModuleFinder;
-import java.nio.file.*;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.lang.module.ModuleFinder;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.stream.Collectors.toList;
 
 public class Main extends Application {
 
@@ -47,17 +53,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "DamageCounter");
         layer = createLayer(System.getProperty("user.dir") + "/mods-mvn/", "Collisions");
-        /*while(layer.modules().iterator().hasNext()){
-            System.out.println(layer.modules().iterator().next());
-        }*/
-
-        var services = ServiceLoader.load(layer, IPostEntityProcessingService.class);
-        services.stream()
-                .map(ServiceLoader.Provider::get)
-                .forEach(PostEntityProcessingService ->
-                        System.out.println(PostEntityProcessingService.toString())
-                );
-        services.stream().close();
         launch(Main.class);
     }
 
@@ -234,19 +229,6 @@ public class Main extends Application {
     private Collection<? extends IGamePluginService> getPluginServices() {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
-
-    /*private Collection<? extends IGamePluginService> getPluginServices() {
-        // Load services from the default classpath
-        Collection<? extends IGamePluginService> defaultServices = ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
-
-        // Load services from the module layer (assuming Java 9+)
-        Collection<? extends IGamePluginService> moduleServices = ModuleLayer.boot().findServices(IGamePluginService.class).stream().toList();
-
-        // Combine services from both sources (consider using Sets for better handling of duplicates)
-        List<IGamePluginService> combinedServices = new ArrayList<>(defaultServices);
-        combinedServices.addAll(moduleServices);
-        return combinedServices;
-    }*/
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
