@@ -57,9 +57,8 @@ public class mainAsteroids {
      * Start.
      *
      * @param window the window
-     * @throws Exception the exception
      */
-    public void start(Stage window) throws Exception {
+    public void start(Stage window) {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AsteroidsServiceConfig.class);
 

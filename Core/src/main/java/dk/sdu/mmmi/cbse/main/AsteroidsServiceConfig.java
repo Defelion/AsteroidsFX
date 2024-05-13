@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * The type Asteroids service config.
@@ -30,7 +29,7 @@ public class AsteroidsServiceConfig {
     }
 
     /**
-     * Entity processing service list list.
+     * Entity processing service list.
      *
      * @return the list
      */

@@ -5,6 +5,7 @@ import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 /**
@@ -20,6 +21,12 @@ public class MenuControlSystem implements IEntityProcessingService {
         if(!gameData.getMenu().isDisabled()) {
             if(!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.Q)) {
                 Platform.exit();
+            }
+            if (!gameData.getMenu().isDisabled() && gameData.getKeys().isDown(GameKeys.E)) {
+                Pane menu = gameData.getMenu();
+                menu.setVisible(false);
+                menu.setDisable(true);
+                gameData.setMenu(menu);
             }
             Pane menu = gameData.getMenu();
             menu.toFront();

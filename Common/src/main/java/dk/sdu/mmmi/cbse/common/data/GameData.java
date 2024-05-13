@@ -17,6 +17,7 @@ public class GameData {
     private int immortalTime = 100;
     private Pane Menu = new Pane();
     private boolean GameOver = false;
+    private String playerName;
 
     /**
      * Gets menu.
@@ -165,5 +166,13 @@ public class GameData {
      */
     public void setGameOver(boolean gameOver) {
         this.GameOver = gameOver;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }
