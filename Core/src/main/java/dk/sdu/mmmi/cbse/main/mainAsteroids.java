@@ -26,6 +26,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+/**
+ * The type Main asteroids.
+ */
 public class mainAsteroids {
     private final GameData gameData = new GameData();
     private final World world = new World();
@@ -35,6 +38,13 @@ public class mainAsteroids {
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
 
+    /**
+     * Instantiates a new Main asteroids.
+     *
+     * @param gamePluginServices           the game plugin services
+     * @param entityProcessingServiceList  the entity processing service list
+     * @param postEntityProcessingServices the post entity processing services
+     */
     mainAsteroids(List<IGamePluginService> gamePluginServices,
                   List<IEntityProcessingService> entityProcessingServiceList,
                   List<IPostEntityProcessingService> postEntityProcessingServices) {
@@ -43,6 +53,12 @@ public class mainAsteroids {
         this.postEntityProcessingServices = postEntityProcessingServices;
     }
 
+    /**
+     * Start.
+     *
+     * @param window the window
+     * @throws Exception the exception
+     */
     public void start(Stage window) throws Exception {
 
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AsteroidsServiceConfig.class);
@@ -144,6 +160,9 @@ public class mainAsteroids {
         render();
     }
 
+    /**
+     * Render.
+     */
     public void render() {
         new AnimationTimer() {
             @Override
@@ -214,14 +233,29 @@ public class mainAsteroids {
         }
     }
 
+    /**
+     * Gets game plugin services.
+     *
+     * @return the game plugin services
+     */
     public List<IGamePluginService> getGamePluginServices() {
         return gamePluginServices;
     }
 
+    /**
+     * Gets entity processing services.
+     *
+     * @return the entity processing services
+     */
     public List<IEntityProcessingService> getEntityProcessingServices() {
         return entityProcessingServiceList;
     }
 
+    /**
+     * Gets post entity processing services.
+     *
+     * @return the post entity processing services
+     */
     public List<IPostEntityProcessingService> getPostEntityProcessingServices() {
         return postEntityProcessingServices;
     }

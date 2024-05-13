@@ -9,25 +9,51 @@ import static java.util.stream.Collectors.toList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The type Asteroids service config.
+ */
 public class AsteroidsServiceConfig {
 
+    /**
+     * Instantiates a new Asteroids service config.
+     */
     public AsteroidsServiceConfig() {}
 
+    /**
+     * Game main asteroids.
+     *
+     * @return the main asteroids
+     */
     @Bean
     public mainAsteroids game(){
         return new mainAsteroids(gamePluginServices(), entityProcessingServiceList(), postEntityProcessingServices());
     }
 
+    /**
+     * Entity processing service list list.
+     *
+     * @return the list
+     */
     @Bean
     public List<IEntityProcessingService> entityProcessingServiceList(){
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
+    /**
+     * Game plugin services list.
+     *
+     * @return the list
+     */
     @Bean
     public List<IGamePluginService> gamePluginServices() {
         return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
+    /**
+     * Post entity processing services list.
+     *
+     * @return the list
+     */
     @Bean
     public List<IPostEntityProcessingService> postEntityProcessingServices() {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
