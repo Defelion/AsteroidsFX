@@ -21,6 +21,7 @@
         <module>enemies</module>
         <module>DamageCounter</module>
         <module>Menu</module>
+        <module>CommonScore</module>
     </modules>
     <properties>
         <java>java</java>

@@ -1,9 +1,6 @@
 package dk.sdu.mmmi.cbse.main;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
-import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.GameKeys;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.*;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -177,9 +174,18 @@ public class Main extends Application {
         Text text = new Text(10, 20,
                 "Destroyed asteroids: "+gameData.getDestroyedAsteroids()+
                         "\nDestroyed enemies: "+gameData.getDestroyedEnemies()+
-                        "\nScore: "+gameData.getScore()
-                        +"\namount of elements: "+gameWindow.getChildren().size()
+                        "\nScore: "+gameData.getScore()+
+                        "\namount of elements: "+gameWindow.getChildren().size()
         );
+        if(!gameData.getHighScore().isEmpty()) text.setText(text.getText()+"\nHighscore\nPlayer : Score");
+        for (Score score : gameData.getHighScore()) {
+            text.setText(
+                    text.getText()+
+                    "\n" +
+                    score.getPlayerName() +
+                    " : " + score.getScore()
+            );
+        }
         gameData.setDisplayWidth((int) gameWindow.getWidth());
         /*gameData.setLog("");
         gameData.setLog(gameData.getLog()+"\nData: "+gameData.getDisplayWidth()+", Window: "+gameWindow.getWidth());*/

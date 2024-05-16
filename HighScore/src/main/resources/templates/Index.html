@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Highscore</title>
+</head>
+<body>
+    <div class="index-page">
+        <h1>Asteroids HighScore</h1>
+        <table>
+            <tr>
+                <th th:if="${not #lists.isEmpty(createdTables) and not #lists.isEmpty(createdTables[0].tableCols)}"
+                    th:each="header : ${createdTables[0].tableCols}" th:text="${header.colName}"></th>
+
+            </tr>
+            <tr th:each="createdTable, rowStat : ${createdTables}" th:if="${rowStat.index} >= 0">
+                <td th:each="tableCol : ${createdTable.tableCols}" th:text="${tableCol.value}"></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

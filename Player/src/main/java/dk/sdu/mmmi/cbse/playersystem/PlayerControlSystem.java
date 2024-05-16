@@ -1,15 +1,13 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
-import dk.sdu.mmmi.cbse.common.data.Entity;
-import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.GameKeys;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.*;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import javafx.scene.layout.Pane;
 
-import java.util.Collection;
-import java.util.ServiceLoader;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,7 +18,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         if (world.getEntities(Player.class).size() > 0) {
             for (Entity player : world.getEntities(Player.class)) {
-                if (player.getHealth() <= 0) {
+                if (player.getHealth() <= 0 && !gameData.isGameOver()) {
+                    List<Score> highScore = gameData.getHighScore();
+                    Score score = new Score(Date.from(Instant.now()), gameData.getScore(), gameData.getPlayerName());
+                    highScore.add(score);
+                    System.out.println("High score for " + score.getDate() + " : " + score.getPlayerName() + " : " + score.getScore());
+                    gameData.setHighScore(highScore);
                     player.setDead(true);
                     Pane menu = gameData.getMenu();
                     menu.setVisible(true);

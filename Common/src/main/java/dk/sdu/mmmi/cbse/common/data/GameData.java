@@ -2,6 +2,9 @@ package dk.sdu.mmmi.cbse.common.data;
 
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The type Game data.
  */
@@ -13,10 +16,12 @@ public class GameData {
     private int destroyedAsteroids = 0;
     private int destroyedEnemies = 0;
     private double score = 0;
-    private  String log = "";
+    private List<Score> highScore = new ArrayList<>();
+    private String log = "";
     private int immortalTime = 100;
     private Pane Menu = new Pane();
     private boolean GameOver = false;
+    private String playerName;
 
     /**
      * Gets menu.
@@ -165,5 +170,21 @@ public class GameData {
      */
     public void setGameOver(boolean gameOver) {
         this.GameOver = gameOver;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public List<Score> getHighScore() {
+        return highScore;
+    }
+
+    public void setHighScore(List<Score> highScore) {
+        this.highScore = highScore;
     }
 }
