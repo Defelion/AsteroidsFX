@@ -17,11 +17,18 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String showReports(Model model) {
         List<CreatedTable> createdTables = showTable();
         model.addAttribute("createdTables", createdTables);
-        return "/index";
+        return "index";
+    }
+
+    @GetMapping("/index")
+    public String showReportsIndex(Model model) {
+        List<CreatedTable> createdTables = showTable();
+        model.addAttribute("createdTables", createdTables);
+        return "index";
     }
 
     public List<CreatedTable> showTable() {
@@ -32,7 +39,7 @@ public class IndexController {
         headers.add("Score");
         List<CreatedTable> createdTables = createTableList(headers, highScore);
         if (!highScore.isEmpty()) {
-            System.out.println("Created Tables Size: " + createdTables.size());
+            //System.out.println("Created Tables Size: " + createdTables.size());
             return createdTables;
         } else {
             System.out.println("High score is empty. Returning an empty list.");
@@ -46,47 +53,34 @@ public class IndexController {
         int rows = 0;
         if (highScore.isEmpty()) {
             // Add backup test data
-            for (int i = 1; i <= 10; i++) {
-                CreatedTable createdTable = new CreatedTable();
-                createdTable.setRow(i);
-                List<TableCol> tableColList = new ArrayList<>();
-
-                TableCol tableCol1 = new TableCol();
-                tableCol1.setColName("test1");
-                tableCol1.setValue("testval1row" + i);
-                tableColList.add(tableCol1);
-
-                TableCol tableCol2 = new TableCol();
-                tableCol2.setColName("test2");
-                tableCol2.setValue("testval2row" + i);
-                tableColList.add(tableCol2);
-
-                createdTable.setTableCols(tableColList);
-                tableList.add(createdTable);
-            }
-        } else {
-            // Populate table with data from highScore
-            for (Score score : highScore) {
-                rows++;
-                CreatedTable createdTable = new CreatedTable();
-                createdTable.setRow(rows);
-                List<TableCol> colList = new ArrayList<>();
-
-                for (String BRow : headers) {
-                    TableCol tableCol = new TableCol();
-                    tableCol.setColName(BRow);
-                    if (BRow.equals("Date"))
-                        tableCol.setValue(String.valueOf(score.getDate()));
-                    if (BRow.equals("Player"))
-                        tableCol.setValue(score.getPlayerName());
-                    if (BRow.equals("Score"))
-                        tableCol.setValue(String.valueOf(score.getScore()));
-                    colList.add(tableCol);
-                }
-                createdTable.setTableCols(colList);
-                tableList.add(createdTable);
-            }
+            Score score = new Score();
+            score.setDate(new Date());
+            score.setPlayerName("noscore");
+            score.setScore(0);
+            highScore.add(score);
         }
+        // Populate table with data from highScore
+        for (Score score : highScore) {
+            rows++;
+            CreatedTable createdTable = new CreatedTable();
+            createdTable.setRow(rows);
+            List<TableCol> colList = new ArrayList<>();
+
+            for (String BRow : headers) {
+                TableCol tableCol = new TableCol();
+                tableCol.setColName(BRow);
+                if (BRow.equals("Date"))
+                    tableCol.setValue(String.valueOf(score.getDate()));
+                if (BRow.equals("Player"))
+                    tableCol.setValue(score.getPlayerName());
+                if (BRow.equals("Score"))
+                    tableCol.setValue(String.valueOf(score.getScore()));
+                colList.add(tableCol);
+            }
+            createdTable.setTableCols(colList);
+            tableList.add(createdTable);
+        }
+
 
         return tableList;
     }
@@ -121,7 +115,7 @@ public class IndexController {
             score.setPlayerName("error");
             score.setScore(0);
         }
-        System.out.println(scores);
+        //System.out.println(scores);
         return scores;
     }
 }
