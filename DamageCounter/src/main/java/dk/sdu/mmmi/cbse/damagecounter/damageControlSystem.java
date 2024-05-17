@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.damage;
+package dk.sdu.mmmi.cbse.damagecounter;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -21,7 +21,7 @@ public class damageControlSystem implements IPostEntityProcessingService {
                     entity1.getPaint() == entity2.getPaint())
                     continue;
                 //collision return true if there is a collision
-                if(collision(entity1,entity2,gameData)) {
+                if(collision(entity1,entity2)) {
                     entity1.setHealth((entity1.getHealth()-entity2.getDamage()));
                     entity2.setHealth((entity2.getHealth()-entity1.getDamage()));
                     if(entity1.getHealth()<=0)entity1.setDamage(0);
@@ -36,10 +36,9 @@ public class damageControlSystem implements IPostEntityProcessingService {
      *
      * @param e1       the e 1
      * @param e2       the e 2
-     * @param gameData the game data
      * @return the boolean
      */
-    public boolean collision (Entity e1, Entity e2, GameData gameData) {
+    public boolean collision (Entity e1, Entity e2) {
         boolean touching = false;
         double distance = (
             Math.sqrt(

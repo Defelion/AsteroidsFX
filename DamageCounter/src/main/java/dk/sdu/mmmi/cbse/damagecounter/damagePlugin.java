@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.damage;
+package dk.sdu.mmmi.cbse.damagecounter;
 
 /**
  * The type Damage plugin.
