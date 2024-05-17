@@ -55,8 +55,10 @@ public class MenuPlugin implements IGamePluginService {
             }
         };
         Exit.setOnMouseClicked(exitEvent);
-        menu.setPrefSize(90,70);
-        menu.setBackground(Background.fill(Color.LIGHTGRAY));
+        menu.setPrefSize(90,65);
+        menu.setStyle("-fx-background-radius: 6; " +
+                "-fx-background-color: white; " +
+                "-fx-background-insets: 0, 0 1 1 0;");
         Exit.setTranslateX(5);
         Exit.setTranslateY(35);
         Exit.setPrefWidth(80);
