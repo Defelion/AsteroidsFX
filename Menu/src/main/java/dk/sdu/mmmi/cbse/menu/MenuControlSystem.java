@@ -25,6 +25,8 @@ public class MenuControlSystem implements IEntityProcessingService {
             menu.toFront();
             menu.setTranslateX((gameData.getDisplayWidth()/2)-(menu.getPrefWidth()/2));
             menu.setTranslateY((gameData.getDisplayHeight()/2)-(menu.getPrefWidth()/2));
+            gameData.setLog("");
+            gameData.setLog(gameData.getLog()+"\nresolution:"+gameData.getDisplayWidth()+"x"+gameData.getDisplayHeight());
             gameData.setMenu(menu);
         }
     }

@@ -1,16 +1,10 @@
 package dk.sdu.mmmi.cbse.asteroids;
 
 import dk.sdu.mmmi.cbse.common.asteroids.Asteroids;
-import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-
-import java.util.Collection;
-import java.util.ServiceLoader;
-
-import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -40,9 +34,5 @@ public class AsteroidProcessor implements IEntityProcessingService {
             if (asteroid.getY() < 0) { asteroid.setY(gameData.getDisplayHeight()); }
             if (asteroid.getY() > gameData.getDisplayHeight()) { asteroid.setY(0); }
         }
-    }
-
-    private Collection<? extends IAsteroidSplitter> getIAsteroidSplitters() {
-        return ServiceLoader.load(IAsteroidSplitter.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

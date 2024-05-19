@@ -113,24 +113,24 @@ public class EnemiesControlSystem implements IEntityProcessingService {
 
     }
 
-    private boolean targetPlayer (Entity enemy, Entity player) {
-        boolean playerTarget = false;
-        if(player != null) {
+    private boolean targetPlayer (Entity enemy, Entity entity) {
+        boolean entityTarget = false;
+        if(entity != null) {
 
             /*Point2D enemyPoint = new Point2D(enemy.getX(), enemy.getY());
             Point2D playerPoint = new Point2D(player.getX(), player.getY());
             double distance = enemyPoint.distance(playerPoint);*/
             double distance = (
                     Math.sqrt(
-                            (enemy.getX() - player.getX()) * (enemy.getX() - player.getX()) +
-                                    (enemy.getY() - player.getY()) * (enemy.getY() - player.getY())
+                            (enemy.getX() - entity.getX()) * (enemy.getX() - entity.getX()) +
+                                    (enemy.getY() - entity.getY()) * (enemy.getY() - entity.getY())
                     )
             );
             if (distance <= (enemy.getSize() * 10)) {
-                playerTarget = true;
+                entityTarget = true;
             }
         }
-        return playerTarget;
+        return entityTarget;
     }
     private Collection<? extends BulletSPI> getBulletSPIs() {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());

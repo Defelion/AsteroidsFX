@@ -53,8 +53,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        gameData.setDisplayHeight(800);
-        gameData.setDisplayWidth(800);
+        gameData.setDisplayHeight(744);
+        gameData.setDisplayWidth(1348);
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
         Background bg = new Background(bgFill);
