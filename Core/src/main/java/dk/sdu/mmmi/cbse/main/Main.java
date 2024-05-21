@@ -225,7 +225,6 @@ public class Main extends Application {
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
             polygon.setFill(entity.getPaint());
-            //polygon.accessibleTextProperty().setValue(String.valueOf(entity.getHealth()));
         }
     }
 
